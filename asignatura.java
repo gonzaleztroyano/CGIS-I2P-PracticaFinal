@@ -1,23 +1,23 @@
+import java.util.Scanner;
 public class asignatura {
-    private String codigo;
-    private String nombre;
-    private int total_horas_semana;
-    private int max_horas_dia;
-    private String[] docente;
+    public String codigo;
+    public String nombre;
+    public int total_horas_semana;
+    public int max_horas_dia;
+    public String[] docente;
 
-    public asignatura(String cod, String nom, int ths, int mhd, String[] doc) {
+    public asignatura(String cod, String nom, int ths, int mhd) {
         // Check if all passed
         this.codigo = cod;
-        nombre = nom;
+        this.nombre = nom;
+        this.total_horas_semana = ths;
+        this.max_horas_dia = mhd;
     }
 
-    public void edit() {
-
-    }
-
-    public void remove() {
-    }
-
-    public void removeall() {
+    public void getdetails(){
+        System.out.println("Código:              " + this.codigo);
+        System.out.println("Nombre:              " + this.nombre);
+        System.out.println("Total Horas Semana:  " + this.total_horas_semana);
+        System.out.println("Maximo Horas Dia:    " + this.max_horas_dia);
     }
 }

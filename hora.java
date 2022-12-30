@@ -1,7 +1,14 @@
 public class hora {
-    private docente docente;
-    private aula aula;
-    private asignatura asignatura;
+    // public docente docente;
+    public aula aula;
+    public asignatura asignatura;
 
-    public hora
+    public hora(){
+        // Creador null
+    }
+
+    public hora(aula p_aula, asignatura asg){
+        aula = p_aula;
+        asignatura = asg;
+    }
 }
