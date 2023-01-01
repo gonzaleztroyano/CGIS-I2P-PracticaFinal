@@ -1,4 +1,3 @@
-import java.util.Scanner;
 public class asignatura {
     public String codigo;
     public String nombre;
@@ -14,7 +13,7 @@ public class asignatura {
         this.max_horas_dia = mhd;
     }
 
-    public void getdetails(){
+    public void get_details(){
         System.out.println("Código:              " + this.codigo);
         System.out.println("Nombre:              " + this.nombre);
         System.out.println("Total Horas Semana:  " + this.total_horas_semana);

@@ -14,8 +14,8 @@ class Main {
         horario1.listar_asignaturas();
         horario1.get_asg_codes();
         horario1.detalle_asignatura();
-        crear_tiempo(horario1);
-        horario1.lista_dias();
+        horario1.get_detalle_aula();
+        horario1.get_docente_listado();
     }
 
     public static void muestra_menu() {
@@ -26,10 +26,14 @@ class Main {
         hor.asignatura_auto("I2P", "Introduccion a la Programacion", 8, 2);
         hor.asignatura_auto("MCS", "Matematicas para la Computacion y Servicios", 9, 4);
         hor.asignatura_auto("HFS", "Historia y Fundamentos de los Servicios", 4, 1);
+        hor.add_aula_auto("G107", 30);
+        hor.add_aula_auto("G108", 20);
+        hor.add_aula_auto("G109", 25);
+        hor.add_docente_auto("123456789A","Manuel", "Sanchez", "Diaz");
+        hor.add_docente_auto("234567890B","Cristina", "Gonzalez", "Pons");
+        hor.add_docente_auto("345678901C","Rodrigo", "Hidalgo", "Esteban");
+        hor.add_docente_auto("456789012D","Lucia", "Jimenez", "Diaz");
+
     };
 
-    public static void crear_tiempo(horario hor) {
-        String[] dias = { "lunes", "martes", "miercoles", "jueves", "viernes" };
-        hor.crea_dias(dias);
-    }
 }
