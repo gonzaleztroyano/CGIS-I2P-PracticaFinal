@@ -42,7 +42,7 @@ public class horario {
             }
         }
         public void get_asg_codes(){
-            System.out.println("Asignaturas registradas en este momento:");
+            System.out.println("Asignaturas registradas en este momento: ");
             for (asignatura i : asignaturas) {
                 System.out.println(i.codigo);
             }
@@ -58,7 +58,55 @@ public class horario {
             }
 
             // TODO: asistente edicion asignatura
+        public void editar_asignatura(){
+            System.out.println("Mostrando lista de asignaturas: ");
+            get_asg_codes();
+            System.out.println("Introduzca el codigo de la asignatura que desea editar: ");
+            Scanner scanner = new Scanner(System.in);
+            String cod_a_buscar = scanner.next();
+            for (asignatura i: asignaturas) {
+                if (i.codigo.equals(cod_a_buscar)) {
+                    System.out.println("Estos son los detalles de la asignatura solicitada:");
+                    i.get_details();
+                    System.out.println("Introduzca los tres primeros caracteres de la variable que desea cambiar: ");
+                    Scanner scanner = new Scanner(System.in);
+                    String tres_primeros_caracteres = scanner.next();
+                    // TODO: comprobar
+                    System.out.println("Introduzca el nuevo valor de " + tres_primeros_caracteres);
+                    Scanner scanner = new Scanner(System.in);
+                    String nuevo_valor = scanner.next();
+                }
+                else{
+                    (scanner = )
+                }
+            }
+
+        }
+ 
+                //  --> public docente.XXX = YYY
+                //  --> private method update_hours_max(14) 
+                    // editar propiedad 
+                // OKI 
             // TODO: asistente eliminacion asignatura
+
+        }
+
+        public void eliminar_asignatura(){
+            System.out.println("Mostrando lista de asignaturas: ");
+            get_asg_codes();
+            System.out.println("Introduzca el codigo de la asignatura que desea eliminar: ");
+            Scanner scanner = new Scanner(System.in);
+            String cod_a_buscar = scanner.next();
+            for (asignatura i: asignaturas) {
+                if (i.codigo.equals(cod_a_buscar)) {
+                    asignaturas.remove(i);
+                    break;
+                }
+            }
+        }
+
+        public void eliminar_asignaturas(){
+            asignaturas.clear();
         }
 
     /* ***********************************************
@@ -68,18 +116,7 @@ public class horario {
      * ***********************************************
      */
 
-    // public void crea_dias(String[] dias_pasados){
-    //     for (int i = 0; i < dias_pasados.length; i++){
-    //         System.out.println(dias_pasados[i]);
-    //         dias[i] = new dia(dias_pasados[i]);
-    //     }
-    //     length_semana = dias_pasados.length;
-    // }
-    // public void lista_dias(){
-    //     for (int i = 0; i<= length_semana-1; i++){
-    //         System.out.println(dias[i] + " // " + dias[i].nombre);
-    //     }
-    // }
+
 
     // TODO: listar entradas del un dia
     // TODO: listar todas las entradas de todos los dias
@@ -95,7 +132,7 @@ public class horario {
         }
 
         public void get_aula_codes(){
-            System.out.println("Aulas registradas en este momento:");
+            System.out.println("Aulas registradas en este momento: ");
             for (aula i: aulas) {
                 System.out.println(i.id);
             }
@@ -126,14 +163,14 @@ public class horario {
      */
 
         public void get_docente_dnis(){
-            System.out.println("DNIs registrados en este momento:");
+            System.out.println("DNIs registrados en este momento: ");
             for (docente i: docentes) {
                 System.out.println(i.get_dni());
             }
         }
 
         public void get_docente_listado(){
-            System.out.println("DNIs registrados en este momento:");
+            System.out.println("DNIs registrados en este momento: ");
             for (docente i: docentes) {
                 System.out.println(i.get_dni() + ": " + i.get_fullname());
             }

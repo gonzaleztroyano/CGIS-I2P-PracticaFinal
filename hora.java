@@ -3,7 +3,7 @@ public class hora {
     public aula aula;
     public asignatura asignatura;
 
-    public hora(){
+    public hora(docente doc, asignatura asig){
         // Creador null
     }
 

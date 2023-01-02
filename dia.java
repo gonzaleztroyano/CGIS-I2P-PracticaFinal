@@ -10,5 +10,4 @@ public class dia {
     public hora get_entrada(int num){
         return this.horas[num];
     }
-    // Hola hola
 }
