@@ -4,7 +4,7 @@
  * Practica Final
  * 
  */
-
+import java.util.Scanner;
 class Main {
     static horario horario1 = new horario("horario1");
 
@@ -16,12 +16,12 @@ class Main {
         horario1.detalle_asignatura();
         horario1.get_detalle_aula();
         horario1.get_docente_listado();
+        horario1.editar_asignatura();
     }
 
     public static void muestra_menu() {
         System.out.println("Elija una de las siguientes opciones:");
 
-        System.out.println("1. Definir una asignatura");
         System.out.println("    1.1. Agregar una asignatura");
         System.out.println("    1.2. Editar una asignatura");
         System.out.println("    1.3. Eliminar una asignatura");
@@ -39,61 +39,59 @@ class Main {
         System.out.println("    3.3. Búsqueda por profesor");
         System.out.println("    3.4. Mostrar todas las entradas");
 
-        System.out.println("4. Salir")
+        System.out.println("4. Salir");
 
-        System.out.println("Introduzca el numero de la opcion que desea seleccionar")
+        System.out.println("Introduzca el numero de la opcion que desea seleccionar");
 
         Scanner scanner = new Scanner(System.in);
         int num = scanner.nextInt();
 
-        if (scanner == 11) {
+
+        if (num == 11) {
             horario1.nueva_asignatura();
-        } else (scanner == 12){
+        } else if (num == 12){
             System.out.println("hola"); 
             // TODO: asignar el metodo
-        } else (scanner == 13){
+        } else if (num == 13){
             horario1.eliminar_asignatura(); 
-        } else (scanner == 14){
+        } else if (num == 14){
             horario1.eliminar_asignaturas();
-            System.out.println("Las asignaturas se han eliminado correctamente.") 
-        }else (scanner == 21){
+            System.out.println("Las asignaturas se han eliminado correctamente.");
+        }else if (num == 21){
             System.out.println("hola"); 
             // TODO: asignar el metodo
-        }else (scanner == 22){
+        }else if (num == 22){
             System.out.println("hola");
             // TODO: asignar el metodo
-        }else (scanner == 22){
+        }else if (num == 23){
             System.out.println("hola");
              // TODO: asignar el metodo
-        }else (scanner == 23){
+        }else if (num == 24){
             System.out.println("hola");
              // TODO: asignar el metodo
-        }else (scanner == 24){
+        }else if (num == 31){
             System.out.println("hola");
              // TODO: asignar el metodo
-        }else (scanner == 31){
+        }else if (num == 32){
             System.out.println("hola");
              // TODO: asignar el metodo
-        }else (scanner == 32){
+        }else if (num == 33){
             System.out.println("hola");
              // TODO: asignar el metodo
-        }else (scanner == 33){
+        }else if(num == 34){
             System.out.println("hola");
              // TODO: asignar el metodo
-        }else (scanner == 34){
-            System.out.println("hola");
-             // TODO: asignar el metodo
-        }else (scanner == 4){
+        }else if (num == 4){
             System.out.println("Adios");
         }
         
-
+    }
 
 
 
     public static void carga_inicial(horario hor) {
         hor.asignatura_auto("I2P", "Introduccion a la Programacion", 8, 2);
-        hor.asignatura_add_auto("MCS", "Matematicas para la Computacion y Servicios", 9, 4);
+        hor.asignatura_auto("MCS", "Matematicas para la Computacion y Servicios", 9, 4);
         hor.asignatura_auto("HFS", "Historia y Fundamentos de los Servicios", 4, 1);
         hor.asignatura_auto("TDS", "Teoria de Sistemas", 10, 3);
         hor.asignatura_auto("ADQ", "Arquitectura de Computadores", 8, 3);

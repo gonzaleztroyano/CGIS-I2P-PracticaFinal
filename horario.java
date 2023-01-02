@@ -30,7 +30,6 @@ public class horario {
             String nom = datos_add.next();
             int ths = datos_add.nextInt();
             int mhd = datos_add.nextInt();
-            // TODO: Pending Array docente
             asignaturas.add(new asignatura(cod, nom, ths, mhd));
         }
         public void asignatura_auto(String cod, String nom, int ths, int mhd){
@@ -56,40 +55,48 @@ public class horario {
                     i.get_details();
                 }
             }
+        }
 
             // TODO: asistente edicion asignatura
         public void editar_asignatura(){
             System.out.println("Mostrando lista de asignaturas: ");
             get_asg_codes();
             System.out.println("Introduzca el codigo de la asignatura que desea editar: ");
-            Scanner scanner = new Scanner(System.in);
-            String cod_a_buscar = scanner.next();
+            Scanner scanner_editar = new Scanner(System.in);
+            String cod_a_buscar = scanner_editar.next();
             for (asignatura i: asignaturas) {
                 if (i.codigo.equals(cod_a_buscar)) {
                     System.out.println("Estos son los detalles de la asignatura solicitada:");
                     i.get_details();
                     System.out.println("Introduzca los tres primeros caracteres de la variable que desea cambiar: ");
-                    Scanner scanner = new Scanner(System.in);
-                    String tres_primeros_caracteres = scanner.next();
-                    // TODO: comprobar
+                    Scanner scanner_trescaracteres = new Scanner(System.in);
+                    String tres_primeros_caracteres = scanner_trescaracteres.next();
                     System.out.println("Introduzca el nuevo valor de " + tres_primeros_caracteres);
-                    Scanner scanner = new Scanner(System.in);
-                    String nuevo_valor = scanner.next();
+                    Scanner scannernuevo_valor = new Scanner(System.in);
+                    if (tres_primeros_caracteres.equals("COD") || tres_primeros_caracteres.equals("NOM")){
+                        String valor_a_cambiar = scannernuevo_valor.next();
+                    } else if (tres_primeros_caracteres.equals("MAX") || tres_primeros_caracteres.equals("TOT")) {
+                        int valor_a_cambiar = scannernuevo_valor.nextInt();
+                    } else {
+                        System.out.println("Error en la introduccion de datos.");
+                    }
+                    if ()
                 }
-                else{
-                    (scanner = )
+                
+            }
+        }
+
+        public asignatura asignatura_by_id(String p_id){
+            for (asignatura as: asignaturas) {
+                if (p_id.equals(as.codigo)){
+                    return as;
                 }
             }
-
+            return null;
         }
- 
-                //  --> public docente.XXX = YYY
-                //  --> private method update_hours_max(14) 
-                    // editar propiedad 
-                // OKI 
+
+
             // TODO: asistente eliminacion asignatura
-
-        }
 
         public void eliminar_asignatura(){
             System.out.println("Mostrando lista de asignaturas: ");
@@ -111,10 +118,41 @@ public class horario {
 
     /* ***********************************************
      * ***********************************************
-     *               Clases DIAS
+     *      Clases HORAS / ENTRADAS HORARIO
      * ***********************************************
      * ***********************************************
      */
+
+     public void add_entrada_horario(){
+        // Aquí va el asistente
+     }
+
+     public void add_entrada_horario_auto(String p_dia, String id_aula, String id_asignatura, int p_hora){
+        int dia_deseado = 0;
+        aula aula_deseada = aula_by_id(id_aula);
+        asignatura asignatura_deseada = asignatura_by_id(id_asignatura);
+
+        p_dia.toLowerCase();
+        if (p_dia.equals("lunes")){
+            dia_deseado = 0;
+        } else if (p_dia.equals("martes")){
+            dia_deseado = 1;
+        } else if (p_dia.equals("miercoles")){
+            dia_deseado = 2;
+        } else if (p_dia.equals("jueves")){
+            dia_deseado = 3;
+        } else if (p_dia.equals("viernes")){
+            dia_deseado = 4;
+        } else if (p_dia.equals("sadado")){
+            dia_deseado = 5;
+        } else if (p_dia.equals("domingo")){
+            dia_deseado = 6;
+        } 
+        aula_deseada.dia[dia_deseado] = new dia(p_dia);
+        aula_deseada.dia.horas = new hora[] horas
+        
+        aula_deseada.dia[dia_deseado].horas[p_hora] = new hora(aula_deseada, asignatura_deseada);
+     }
 
 
 
@@ -149,6 +187,19 @@ public class horario {
                         i.get_details();
                     }
                 }
+        }
+
+        public aula aula_by_id(String p_id){
+            // System.out.println("Entro en method");
+            for (aula a: aulas) {
+                // System.out.println("Recorriendo...");
+                if (p_id.equals(a.id)){
+                    // System.out.println("Encontrado");
+                    // a.get_details();
+                    return a;
+                }
+            }
+            return null;
         }
 
         // TODO: asistente adicion aula
