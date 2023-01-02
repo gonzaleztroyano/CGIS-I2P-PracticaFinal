@@ -7,7 +7,7 @@ public class aula {
     public aula(String p_id, int p_csp){
         id = p_id;
         // Problema: se deben poder manejar tantos horarios como aulas tenga!
-        // Solución: El aula tiene los días. 
+        // Solucion: El aula tiene los dias. 
         capacidad = p_csp;
         registros_anadidos = 0;
         dia[] dia = new dia[7];
@@ -19,7 +19,7 @@ public class aula {
     }
 
     public void get_details(){
-        System.out.println("Código (id):         " + this.id);
+        System.out.println("Codigo (id):         " + this.id);
         System.out.println("Capacidad:           " + this.capacidad);
         System.out.println("Registros anadidos:  " + this.registros_anadidos);
     }

@@ -1,7 +1,7 @@
 /**
  * main class of Java Program
  * 
- * Práctica Final
+ * Practica Final
  * 
  */
 

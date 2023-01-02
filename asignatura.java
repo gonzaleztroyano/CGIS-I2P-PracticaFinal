@@ -14,7 +14,7 @@ public class asignatura {
     }
 
     public void get_details(){
-        System.out.println("Código:              " + this.codigo);
+        System.out.println("Codigo:              " + this.codigo);
         System.out.println("Nombre:              " + this.nombre);
         System.out.println("Total Horas Semana:  " + this.total_horas_semana);
         System.out.println("Maximo Horas Dia:    " + this.max_horas_dia);

@@ -23,8 +23,8 @@ public class horario {
      */
 
         public void nueva_asignatura(){
-            System.out.println("Bienvenido al proceso de creación de asignaturas");
-            System.out.println("Introduzca, separados por espacios, los siguientes valores:\n 1. Codigo \n 2. Nombre \n 3. Total horas semana \n 4. Máximo horas día");
+            System.out.println("Bienvenido al proceso de creacion de asignaturas");
+            System.out.println("Introduzca, separados por espacios, los siguientes valores:\n 1. Codigo \n 2. Nombre \n 3. Total horas semana \n 4. Maximo horas dia");
             Scanner datos_add = new Scanner(System.in);
             String cod = datos_add.next();
             String nom = datos_add.next();
@@ -57,13 +57,13 @@ public class horario {
                 }
             }
 
-            // TODO: asistente edición asignatura
-            // TODO: asistente eliminación asignatura
+            // TODO: asistente edicion asignatura
+            // TODO: asistente eliminacion asignatura
         }
 
     /* ***********************************************
      * ***********************************************
-     *               Clases DÍAS
+     *               Clases DIAS
      * ***********************************************
      * ***********************************************
      */
@@ -81,8 +81,8 @@ public class horario {
     //     }
     // }
 
-    // TODO: listar entradas del un día
-    // TODO: listar todas las entradas de todos los días
+    // TODO: listar entradas del un dia
+    // TODO: listar todas las entradas de todos los dias
 
     /* ***********************************************
      * ***********************************************
@@ -103,7 +103,7 @@ public class horario {
 
         public void get_detalle_aula(){
             get_aula_codes();
-            System.out.println("Introzca el código del aula para la que desea ver los detalles: ");
+            System.out.println("Introzca el codigo del aula para la que desea ver los detalles: ");
             // TODO: Check if requested exists. Maybe return an array?
             Scanner scanner = new Scanner(System.in);
             String cod_a_buscar = scanner.next();
@@ -115,7 +115,7 @@ public class horario {
         }
 
         // TODO: asistente adicion aula
-        // TODO: asistente edición aula
+        // TODO: asistente edicion aula
         // TODO: asistente eliminado aula
 
     /* ***********************************************
@@ -144,6 +144,6 @@ public class horario {
         }
 
         // TODO: asistente adicion docente
-        // TODO: asistente edición docente
+        // TODO: asistente edicion docente
         // TODO: asistente eliminado docente
 }
