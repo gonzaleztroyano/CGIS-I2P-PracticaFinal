@@ -50,8 +50,7 @@ class Main {
         if (num == 11) {
             horario1.nueva_asignatura();
         } else if (num == 12){
-            System.out.println("hola"); 
-            // TODO: asignar el metodo
+            horario1.editar_asignatura();
         } else if (num == 13){
             horario1.eliminar_asignatura(); 
         } else if (num == 14){
@@ -83,6 +82,8 @@ class Main {
              // TODO: asignar el metodo
         }else if (num == 4){
             System.out.println("Adios");
+        }else{
+            System.out.println("El numero que ha introducido no es valido. Por favor, intruzca uno de nuevo.");
         }
         
     }

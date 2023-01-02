@@ -13,8 +13,6 @@ public class horario {
         nombre = nomhorario;
     }
 
-    // TODO: definir nomenclatura 
-
     /* ***********************************************
      * ***********************************************
      *               Clases ASIGNATURA
@@ -57,7 +55,7 @@ public class horario {
             }
         }
 
-            // TODO: asistente edicion asignatura
+
         public void editar_asignatura(){
             System.out.println("Mostrando lista de asignaturas: ");
             get_asg_codes();
@@ -73,14 +71,31 @@ public class horario {
                     String tres_primeros_caracteres = scanner_trescaracteres.next();
                     System.out.println("Introduzca el nuevo valor de " + tres_primeros_caracteres);
                     Scanner scannernuevo_valor = new Scanner(System.in);
+                    
                     if (tres_primeros_caracteres.equals("COD") || tres_primeros_caracteres.equals("NOM")){
                         String valor_a_cambiar = scannernuevo_valor.next();
+                       
+                       
+                        if (tres_primeros_caracteres.equals("COD")) {
+                            i.codigo = valor_a_cambiar;
+                        } else {
+                            i.nombre = valor_a_cambiar;
+                        }
+                   
+                    
                     } else if (tres_primeros_caracteres.equals("MAX") || tres_primeros_caracteres.equals("TOT")) {
                         int valor_a_cambiar = scannernuevo_valor.nextInt();
+
+                        if (tres_primeros_caracteres.equals("MAX")) {
+                            i.max_horas_dia = valor_a_cambiar;
+                        } else {
+                            i.total_horas_semana = valor_a_cambiar;
+                        }
+                   
                     } else {
                         System.out.println("Error en la introduccion de datos.");
                     }
-                    if ()
+                    
                 }
                 
             }
@@ -95,8 +110,6 @@ public class horario {
             return null;
         }
 
-
-            // TODO: asistente eliminacion asignatura
 
         public void eliminar_asignatura(){
             System.out.println("Mostrando lista de asignaturas: ");
@@ -149,7 +162,7 @@ public class horario {
             dia_deseado = 6;
         } 
         aula_deseada.dia[dia_deseado] = new dia(p_dia);
-        aula_deseada.dia.horas = new hora[] horas
+        //aula_deseada.dia.horas = new hora[] horas
         
         aula_deseada.dia[dia_deseado].horas[p_hora] = new hora(aula_deseada, asignatura_deseada);
      }
@@ -202,9 +215,33 @@ public class horario {
             return null;
         }
 
-        // TODO: asistente adicion aula
+        public void aula_delete(){
+            System.out.println("Por favor, introduzca el identificador del aula que desea eliminar:");
+            
+            Scanner scanner = new Scanner(System.in);
+            String id_aula_pasado_por_scanner = scanner.next();
+            aula aula_a_eliminar = aula_by_id(id_aula_pasado_por_scanner);
+            aulas.remove(aula_a_eliminar);
+            
+            System.out.println("La aula ha sido eliminada correctamente.");
+        }
+        
+        public void aula_add(){
+            System.out.println("Bienvenido al asistente de adicion de aulas.");
+            System.out.println("A continuacion se muestran las aulas ya existentes:");
+            get_aula_codes();
+            System.out.println("Introduzca el ID de la nueva aula a crear:");
+            Scanner scannercreacionaula = new Scanner(System.in);
+            String creacion_aula = scannercreacionaula.next();
+            System.out.println("Indique la capacidad para aula " + creacion_aula + ":");
+            Scanner scannercapacidad = new Scanner(System.in);
+            int capacidad_aula_nueva = scannercapacidad.nextInt();
+            aulas.add(new aula(creacion_aula, capacidad_aula_nueva));
+            System.out.println("Su aula ha sido creada con exito.");
+        }
+        
+
         // TODO: asistente edicion aula
-        // TODO: asistente eliminado aula
 
     /* ***********************************************
      * ***********************************************
@@ -231,7 +268,28 @@ public class horario {
             docentes.add(new docente(dni, nombre, apellido1, apellido2));
         }
 
+        public void docente_delete(){
+            System.out.println("Por favor, introduzca el DNI del docente que desee dar de baja:");
+            
+            Scanner scanner = new Scanner(System.in);
+            String docente_de_baja = scanner.next();
+            docente docente_a_eliminar = docente_by_dni(docente_de_baja);
+            docentes.remove(docente_a_eliminar);
+            System.out.println("El docente se ha dado de baja correctamente.");
+
+        }
+
+        public docente docente_by_dni(String p_id){
+            for (docente d: docentes) {
+                // System.out.println("Recorriendo...");
+                if (p_id.equals(d.dni)){
+                    return d;
+                }
+            }
+            return null;
+        }
+
         // TODO: asistente adicion docente
         // TODO: asistente edicion docente
-        // TODO: asistente eliminado docente
+        
 }

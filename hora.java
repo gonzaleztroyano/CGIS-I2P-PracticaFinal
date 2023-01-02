@@ -5,7 +5,7 @@ public class hora {
 
     public hora(docente doc, asignatura asig){
         // Creador null
-    }´
+    }
     public hora(){}
 
     public hora(aula p_aula, asignatura asg){
