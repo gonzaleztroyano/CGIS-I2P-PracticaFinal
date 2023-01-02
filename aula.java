@@ -19,4 +19,18 @@ public class aula {
         System.out.println("Registros anadidos:  " + this.registros_anadidos);
     }
 
+    public void get_lessons(){
+        for (dia d: dia) {
+            System.out.println("    Dia: " + d.nombre);
+            int i = 0;
+            for (hora h: d.horas){
+                if (h != null){
+                    System.out.println("        Hora:          " + i + ":00 - " + (i+1) + ":00");
+                    System.out.println("        Asignatura:    " + h.asignatura.codigo + ": " + h.asignatura.nombre);
+                }
+                i++;
+            }
+        }
+    }
+
 }

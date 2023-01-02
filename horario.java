@@ -13,6 +13,28 @@ public class horario {
         nombre = nomhorario;
     }
 
+    // Convierte dias de la semana, dow, desde strings hacia int
+    public int dow_string_to_int(String p_string){
+        switch (p_string) {
+            case "lunes":
+               return 0;
+            case "martes":
+                return 1;
+            case "miercoles": 
+                return 2;
+            case "jueves":
+                return 3;
+            case "viernes":
+                return 4;
+            case "sadado":
+                return 5;
+            case "domingo":
+                return 6;
+            default:
+               return 99;
+       }
+    }
+
     /* ***********************************************
      * ***********************************************
      *               Clases ASIGNATURA
@@ -127,6 +149,8 @@ public class horario {
 
         public void eliminar_asignaturas(){
             asignaturas.clear();
+            System.out.println("TODAS Las asignaturas se han eliminado correctamente.");
+
         }
 
     /* ***********************************************
@@ -136,31 +160,38 @@ public class horario {
      * ***********************************************
      */
 
-     public void add_entrada_horario(){
+    public void add_entrada_horario(){
         // Aquí va el asistente
      }
 
-     public void add_entrada_horario_auto(String p_dia, String id_aula, String id_asignatura, int p_hora){
+    public void add_entrada_horario_auto(String p_dia, String id_aula, String id_asignatura, int p_hora){
         int dia_deseado = 0;
         aula aula_deseada = aula_by_id(id_aula);
+            if (aula_deseada == null) {
+                System.out.println("El parámetro introducido para el código de aula no es valido. Revise este valor, por favor");
+                return;
+            }
         asignatura asignatura_deseada = asignatura_by_id(id_asignatura);
+            if (asignatura_deseada == null) {
+                System.out.println("El parámetro introducido para el código de asignatura no es valido. Revise este valor, por favor");
+                return;
+            }
 
-        p_dia.toLowerCase();
-         switch (p_dia) {
-             case "lunes" -> dia_deseado = 0;
-             case "martes" -> dia_deseado = 1;
-             case "miercoles" -> dia_deseado = 2;
-             case "jueves" -> dia_deseado = 3;
-             case "viernes" -> dia_deseado = 4;
-             case "sadado" -> dia_deseado = 5;
-             case "domingo" -> dia_deseado = 6;
-         }
-        //aula_deseada.dia.horas = new hora[] horas
-        
+        dia_deseado = dow_string_to_int(p_dia.toLowerCase());
+            // Si la funcion devuelve 99 significa que el parametro introducido no es valido.
+            if (dia_deseado == 99){
+                System.out.println("El parámetro introducido para el día de la semana no es valido. Revise este valor, por favor");
+                return;
+            }
         aula_deseada.dia[dia_deseado].horas[p_hora] = new hora(asignatura_deseada);
-
-         System.out.println("asd");
      }
+
+    public void get_entradas(){
+        for (aula a: aulas){
+            System.out.println("Para el aula código " + a.id + ":");
+            a.get_lessons();
+        }
+    }
 
 
 
