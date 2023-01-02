@@ -1,8 +1,8 @@
 public class aula {
     public String id;
     private int capacidad;
-    public dia[] dia = new dia[7];
-    private String[] dias_a_crear = { "lunes", "martes", "miercoles", "jueves", "viernes", "sabado", "domingo" };
+    public dia[] dia = new dia[] { new dia("lunes"), new dia("martes"), new dia("miercoles"),
+            new dia("jueves"), new dia("viernes"), new dia("sabado"), new dia("domingo")};
     public int registros_anadidos;
 
     public aula(String p_id, int p_csp){
@@ -11,12 +11,6 @@ public class aula {
         // Solucion: El aula tiene los dias. 
         capacidad = p_csp;
         registros_anadidos = 0;
-        dia[] dia = new dia[7];
-        System.out.println("Creado array");
-        for (int i = 0; i <= dias_a_crear.length-1; i++){
-            dia[i] = new dia(dias_a_crear[i]);
-            System.out.println("Creado dia: " + dias_a_crear[i]);
-        }
     }
 
     public void get_details(){

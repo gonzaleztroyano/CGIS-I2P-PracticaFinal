@@ -11,12 +11,15 @@ class Main {
     public static void main(String[] args) {
         // horario1.nueva_asignatura();
         carga_inicial(horario1);
-        horario1.listar_asignaturas();
+
+        horario1.add_entrada_horario_auto("viernes", "G107", "TDS", 10);
+
+        /*horario1.listar_asignaturas();
         horario1.get_asg_codes();
         horario1.detalle_asignatura();
         horario1.get_detalle_aula();
         horario1.get_docente_listado();
-        horario1.editar_asignatura();
+        horario1.editar_asignatura();*/
     }
 
     public static void muestra_menu() {
@@ -47,45 +50,43 @@ class Main {
         int num = scanner.nextInt();
 
 
-        if (num == 11) {
-            horario1.nueva_asignatura();
-        } else if (num == 12){
-            horario1.editar_asignatura();
-        } else if (num == 13){
-            horario1.eliminar_asignatura(); 
-        } else if (num == 14){
-            horario1.eliminar_asignaturas();
-            System.out.println("Las asignaturas se han eliminado correctamente.");
-        }else if (num == 21){
-            System.out.println("hola"); 
+        switch (num) {
+            case 11 -> horario1.nueva_asignatura();
+            case 12 -> horario1.editar_asignatura();
+            case 13 -> horario1.eliminar_asignatura();
+            case 14 -> {
+                horario1.eliminar_asignaturas();
+                System.out.println("Las asignaturas se han eliminado correctamente.");
+            }
+            case 21 -> System.out.println("hola");
+
             // TODO: asignar el metodo
-        }else if (num == 22){
-            System.out.println("hola");
+            case 22 -> System.out.println("hola");
+
             // TODO: asignar el metodo
-        }else if (num == 23){
-            System.out.println("hola");
-             // TODO: asignar el metodo
-        }else if (num == 24){
-            System.out.println("hola");
-             // TODO: asignar el metodo
-        }else if (num == 31){
-            System.out.println("hola");
-             // TODO: asignar el metodo
-        }else if (num == 32){
-            System.out.println("hola");
-             // TODO: asignar el metodo
-        }else if (num == 33){
-            System.out.println("hola");
-             // TODO: asignar el metodo
-        }else if(num == 34){
-            System.out.println("hola");
-             // TODO: asignar el metodo
-        }else if (num == 4){
-            System.out.println("Adios");
-        }else{
-            System.out.println("El numero que ha introducido no es valido. Por favor, intruzca uno de nuevo.");
+            case 23 -> System.out.println("hola");
+
+            // TODO: asignar el metodo
+            case 24 -> System.out.println("hola");
+
+            // TODO: asignar el metodo
+            case 31 -> System.out.println("hola");
+
+            // TODO: asignar el metodo
+            case 32 -> System.out.println("hola");
+
+            // TODO: asignar el metodo
+            case 33 -> System.out.println("hola");
+
+            // TODO: asignar el metodo
+            case 34 -> System.out.println("hola");
+
+            // TODO: asignar el metodo
+            case 4 -> System.out.println("Adios");
+            default ->
+                    System.out.println("El numero que ha introducido no es valido. Por favor, intruzca uno de nuevo.");
         }
-        
+
     }
 
 

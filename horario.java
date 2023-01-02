@@ -146,25 +146,20 @@ public class horario {
         asignatura asignatura_deseada = asignatura_by_id(id_asignatura);
 
         p_dia.toLowerCase();
-        if (p_dia.equals("lunes")){
-            dia_deseado = 0;
-        } else if (p_dia.equals("martes")){
-            dia_deseado = 1;
-        } else if (p_dia.equals("miercoles")){
-            dia_deseado = 2;
-        } else if (p_dia.equals("jueves")){
-            dia_deseado = 3;
-        } else if (p_dia.equals("viernes")){
-            dia_deseado = 4;
-        } else if (p_dia.equals("sadado")){
-            dia_deseado = 5;
-        } else if (p_dia.equals("domingo")){
-            dia_deseado = 6;
-        } 
-        aula_deseada.dia[dia_deseado] = new dia(p_dia);
+         switch (p_dia) {
+             case "lunes" -> dia_deseado = 0;
+             case "martes" -> dia_deseado = 1;
+             case "miercoles" -> dia_deseado = 2;
+             case "jueves" -> dia_deseado = 3;
+             case "viernes" -> dia_deseado = 4;
+             case "sadado" -> dia_deseado = 5;
+             case "domingo" -> dia_deseado = 6;
+         }
         //aula_deseada.dia.horas = new hora[] horas
         
-        aula_deseada.dia[dia_deseado].horas[p_hora] = new hora(aula_deseada, asignatura_deseada);
+        aula_deseada.dia[dia_deseado].horas[p_hora] = new hora(asignatura_deseada);
+
+         System.out.println("asd");
      }
 
 

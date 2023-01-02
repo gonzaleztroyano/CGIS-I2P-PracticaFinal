@@ -4,6 +4,7 @@ public class dia {
     
     // Constructor
     public dia(String nom){
+        nombre = nom;
         hora[] horas = new hora[24];
     }
 
