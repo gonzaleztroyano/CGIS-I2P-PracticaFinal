@@ -6,9 +6,6 @@ public class docente {
     private double sueldo;
     private String titulo;
     
-    
-    // TODO:fixed annadir titulo docente 
-    // TODO:fixed annadir sueldo
 
     public docente(String p_dni, String p_nom, String p_ape1, String p_ape2){
         dni = p_dni;

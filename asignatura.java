@@ -6,7 +6,6 @@ public class asignatura {
     public String[] docente;
     private int horas_actual;
 
-    // TODO: FIXED mantener horas actualmente ocupadas
 
     public asignatura(String cod, String nom, int ths, int mhd) {
         // Check if all passed

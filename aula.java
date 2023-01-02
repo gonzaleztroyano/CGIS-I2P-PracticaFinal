@@ -4,6 +4,7 @@ public class aula {
     public dia[] dia = new dia[7];
     private String[] dias_a_crear = { "lunes", "martes", "miercoles", "jueves", "viernes", "sabado", "domingo" };
     public int registros_anadidos;
+
     public aula(String p_id, int p_csp){
         id = p_id;
         // Problema: se deben poder manejar tantos horarios como aulas tenga!
@@ -23,6 +24,5 @@ public class aula {
         System.out.println("Capacidad:           " + this.capacidad);
         System.out.println("Registros anadidos:  " + this.registros_anadidos);
     }
-
 
 }

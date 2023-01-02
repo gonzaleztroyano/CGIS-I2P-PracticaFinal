@@ -7,6 +7,9 @@ public class dia {
         hora[] horas = new hora[24];
     }
 
+    public dia(){
+        
+    }
     public hora get_entrada(int num){
         return this.horas[num];
     }
