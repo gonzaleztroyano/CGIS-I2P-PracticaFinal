@@ -23,9 +23,9 @@ public class asignatura {
         System.out.println("MAXimo Horas Dia:    " + this.max_horas_dia);
     }
 
-    // Este metodo sirve para comprobar si puedo añadir mas horas a nivel semanal a esta asignatura. 
+    // Este metodo sirve para comprobar si puedo annadir mas horas a nivel semanal a esta asignatura. 
     // Devuelve true si puedo, porque el numero de horas actual es menor que el maximo
-    // Devielve false si no puedo, porque ya he alcanzando el número máximo. 
+    // Devielve false si no puedo, porque ya he alcanzando el numero maximo. 
 
     // TODO: Esto se refiere al limite maximo semanal o diario? Esta en semanal
     public boolean can_be_scheduled_more(){

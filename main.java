@@ -27,6 +27,7 @@ class Main {
 
         int num = 0;
         while (num != 6) { // Este valor solo tomara 6 si se selecciona la opcion 6 del menu. De no ser asi, volvera a ejecutarse la funcion de forma continua.
+            System.out.println("\n\n\n\n\n ================  MENU  ===============\n\n");
             System.out.println("Elija una de las siguientes opciones:");
 
             System.out.println("\n1. Gestion asignaturas:");
@@ -44,9 +45,9 @@ class Main {
             System.out.println("    2.4. Borrar todo el horario");
 
             System.out.println("\n3. Mostrar horario:");
-            System.out.println("    3.1. Búsqueda por asignatura");
-            System.out.println("    3.2. Búsqueda por aula");
-            System.out.println("    3.3. Búsqueda por profesor");
+            System.out.println("    3.1. Busqueda por asignatura");
+            System.out.println("    3.2. Busqueda por aula");
+            System.out.println("    3.3. Busqueda por profesor");
             System.out.println("    3.4. Mostrar todas las entradas");
 
             System.out.println("\n4. Gestion aulas:");

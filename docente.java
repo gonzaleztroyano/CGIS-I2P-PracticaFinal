@@ -5,6 +5,8 @@ public class docente {
     private String apellido2;
     private double sueldo;
     private String titulo;
+
+    // TODO: usar sueldo y titulo. Actualizar acorde metodos
     
 
     public docente(String p_dni, String p_nom, String p_ape1, String p_ape2){

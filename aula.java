@@ -30,6 +30,7 @@ public class aula {
                 }
                 i++;
             }
+            System.out.println("    -----------------");
         }
     }
 
