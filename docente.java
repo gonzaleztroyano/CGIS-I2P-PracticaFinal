@@ -45,26 +45,26 @@ public class docente {
     // Estos metodos sirven para ilustrar que son necesarios metodos para actualizar propiedades privadas. 
     public void update_nombre(String p_introducido){
         this.nombre = p_introducido;
-        System.out.println("Se a actualizado correctamente");
+        System.out.println("Se ha actualizado correctamente");
     }
 
     public void update_ape1(String p_introducido){
         this.apellido1 = p_introducido;
-        System.out.println("Se a actualizado correctamente");
+        System.out.println("Se ha actualizado correctamente");
     }
 
     public void update_ape2(String p_introducido){
         this.apellido2 = p_introducido;
-        System.out.println("Se a actualizado correctamente");
+        System.out.println("Se ha actualizado correctamente");
     }
 
     public void update_sueldo(Double p_introducido){
         this.sueldo = p_introducido;
-        System.out.println("Se a actualizado correctamente");
+        System.out.println("Se ha actualizado correctamente");
     }
     
     public void update_titulo(String p_introducido){
         this.titulo = p_introducido;
-        System.out.println("Se a actualizado correctamente");
+        System.out.println("Se ha actualizado correctamente");
     }
 }

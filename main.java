@@ -12,8 +12,6 @@ class Main {
         // horario1.nueva_asignatura();
         carga_inicial(horario1);
 
-        horario1.add_entrada_horario_auto("viernes", "G107", "TDS", 10);
-
         /*horario1.listar_asignaturas();
         horario1.get_asg_codes();
         horario1.detalle_asignatura();

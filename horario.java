@@ -45,7 +45,7 @@ public class horario {
     }
 
     public boolean confirm_harmfull(){
-        System.out.println("\n ¡¡¡¡   ATENCION   !!! \n La accion que va a realizar es potencialmente peligrosa.");
+        System.out.println("\n !!!   ATENCION   !!! \n La accion que va a realizar es potencialmente peligrosa.");
         System.out.println("Introduzca 'S' para confirmar, o cualquier otra tecla para continuar.");
 
         Scanner scanner_conf = new Scanner(System.in);
@@ -67,6 +67,8 @@ public class horario {
         public void nueva_asignatura(){
             System.out.println("Bienvenido al proceso de creacion de asignaturas");
             System.out.println("Introduzca, separados por espacios, los siguientes valores:\n 1. Codigo \n 2. Nombre \n 3. Total horas semana \n 4. Maximo horas dia\n 5. DNI Docente");
+            System.out.println("Como referencia, se muestran a continuacion los DNIs de los docentes.");
+            get_listado_docente_name_and_dni();            
             Scanner datos_add = new Scanner(System.in);
             String cod = datos_add.next();
             String nom = datos_add.next();
@@ -74,6 +76,8 @@ public class horario {
             int mhd = datos_add.nextInt();
             String dni_doc = datos_add.next();
             asignaturas.add(new asignatura(cod, nom, ths, mhd, docente_by_dni(dni_doc)));
+            System.out.println("Se ha creado correctamente la asignatura.");
+            waiter();
         }
         public void asignatura_auto(String cod, String nom, int ths, int mhd, String dni_doc){
             asignaturas.add(new asignatura(cod, nom, ths, mhd, docente_by_dni(dni_doc)));
@@ -143,9 +147,9 @@ public class horario {
         }
 
         public asignatura asignatura_by_id(String p_id){
-            for (asignatura as: asignaturas) {
-                if (p_id.equals(as.codigo)){
-                    return as;
+            for (asignatura a: asignaturas) {
+                if (p_id.equals(a.codigo)){
+                    return a;
                 }
             }
             return null;
@@ -435,7 +439,7 @@ public class horario {
 
     public void get_entradas_by_aula(){
         get_aula_codes();
-        System.out.println("Introduzca el código del aula a listar:");
+        System.out.println("Introduzca el codigo del aula a listar:");
         Scanner scanner_aula_a_listar = new Scanner(System.in);
         String aula_a_listar = scanner_aula_a_listar.next();
         if (asignatura_by_id(aula_a_listar) == null){
@@ -457,7 +461,7 @@ public class horario {
     public void get_entradas_by_asg() {
         System.out.println("Mostrando asignaturas...");
         listar_asignaturas();
-        System.out.println("Introduzca el código de la asignatura a listar:");
+        System.out.println("Introduzca el codigo de la asignatura a listar:");
         Scanner scanner_asg_a_listar = new Scanner(System.in);
         String asg_a_listar = scanner_asg_a_listar.next();
         if (asignatura_by_id(asg_a_listar) == null) {
@@ -469,14 +473,18 @@ public class horario {
         } else {
             int found = 0;
             asignatura asignatura_para_listar = asignatura_by_id(asg_a_listar);
+            //                     G109   miercoles    9:00 - 10:00
+            System.out.println("    AULA |   DIA    |  HORA");
             for (aula a : aulas) {
                 for (dia d : a.dia) {
                     int i = 0;
-                    for (hora h : d.horas) {
-                        if (h.asignatura == asignatura_para_listar) {
-                            System.out.println(
-                                    "    " + a.id + "   " + d.nombre + "    " + i + ":00 - " + (i + 1) + ":00");
-                            found++;
+                    for (hora h: d.horas) {
+                        if (h != null) {
+                            if (h.asignatura == asignatura_para_listar) {
+                                System.out.println(
+                                        "    " + a.id + "   " + d.nombre + "    " + i + ":00 - " + (i + 1) + ":00");
+                                found++;
+                            }
                         }
                         i++;
                     }
@@ -499,7 +507,6 @@ public class horario {
         if (docente_by_dni(dni_docente_a_listar) == null) {
             // Si entra en null significa que no hay ningun docente con ese DNI dada de alta. Por tanto, no hay nada que listar.
             System.out.println("El DNI introducido no se corresponde con ningun docente registrado. Volviendo al menu");
-            waiter();
             return;
         } else {
             int found = 0;
@@ -508,10 +515,12 @@ public class horario {
                 for (dia d: a.dia){
                     int i = 0;
                     for (hora h: d.horas){
-                        if (h.asignatura.docente == docente_a_listar) {
-                            //                          aula           nombre_dia                    hora                     asignatura
-                            System.out.println("    " + a.id + "   " + d.nombre + "    " + i + ":00 - " + (i+1) + ":00    " + h.asignatura.codigo);
-                            found++;
+                        if (h != null) {
+                            if (h.asignatura.docente == docente_a_listar) {
+                                //                          aula           nombre_dia                    hora                     asignatura
+                                System.out.println("    " + a.id + "   " + d.nombre + "    " + i + ":00 - " + (i + 1) + ":00    " + h.asignatura.codigo);
+                                found++;
+                            }
                         }
                         i++;
                     }
@@ -523,6 +532,7 @@ public class horario {
                 System.out.println("\n   Se han encontrado " + found + " resultados. ");
             }
         }
+        waiter();
     }
 
 
@@ -589,6 +599,7 @@ public class horario {
             aulas.remove(aula_a_eliminar);
             
             System.out.println("La aula ha sido eliminada correctamente.");
+            waiter();
         }
         
         public void aula_add(){
@@ -603,6 +614,7 @@ public class horario {
             int capacidad_aula_nueva = scannercapacidad.nextInt();
             aulas.add(new aula(creacion_aula, capacidad_aula_nueva));
             System.out.println("Su aula ha sido creada con exito.");
+            waiter();
         }
 
         public void eliminar_aulas(){
@@ -626,7 +638,7 @@ public class horario {
             } else {
                 aula aula_a_editar = aula_by_id(id_aula_a_editar);
                 aula_a_editar.get_details();
-                System.out.println("¿Desea cambiar el ID o la capacidad? [ID/CAP]");
+                System.out.println("Desea cambiar el ID o la capacidad? [ID/CAP]");
                 Scanner scanner_cosa_a_cambiar = new Scanner(System.in);
                 String cosa_a_cambiar = scanner_cosa_a_cambiar.next();
                 switch (cosa_a_cambiar){
@@ -668,6 +680,7 @@ public class horario {
             System.out.println("DNIs registrados en este momento: ");
             for (docente i: docentes) {
                 i.get_details();
+                System.out.println("");
             }
             waiter();
         }
@@ -740,7 +753,7 @@ public class horario {
 
             } else {
                 // si entra aqui significa que ya hay un/una docente con ese DNI. por tanto, no podemos annadirlo.
-                // Mostramos también el nombre del registro ya annadido para ayudar al usuario. 
+                // Mostramos tambien el nombre del registro ya annadido para ayudar al usuario. 
                 System.out.println("ERROR: ya existe un registro para ese DNI: " + docente_by_dni(add_doce_dni).get_fullname());
                 System.out.println("Puede, si asi lo desea, eliminar el registro o modificarlo desde las diferentes opciones del menu.");
                 waiter();
@@ -782,24 +795,24 @@ public class horario {
                         docente_a_modificar.dni = valor_a_cambiar;
                         break;
                     case "NOM":
-                        String valor_a_cambiar = scanner_valor_a_cambiar.next();
-                        docente_a_modificar.update_nombre(valor_a_cambiar);
+                        String valor_a_cambiar_n = scanner_valor_a_cambiar.next(); // Se cambia el nombre porque si no chilla...
+                        docente_a_modificar.update_nombre(valor_a_cambiar_n);
                         break;
                     case "APE1":
-                        String valor_a_cambiar = scanner_valor_a_cambiar.next();
-                        docente_a_modificar.update_ape1(valor_a_cambiar);
+                        String valor_a_cambiar_a1 = scanner_valor_a_cambiar.next();
+                        docente_a_modificar.update_ape1(valor_a_cambiar_a1);
                         break;
                     case "APE2":
-                        String valor_a_cambiar = scanner_valor_a_cambiar.next();
-                        docente_a_modificar.update_ape2(valor_a_cambiar);
+                        String valor_a_cambiar_a2 = scanner_valor_a_cambiar.next();
+                        docente_a_modificar.update_ape2(valor_a_cambiar_a2);
                         break;
                     case "SUE":
-                        Double valor_a_cambiar = scanner_valor_a_cambiar.nextDouble();
-                        docente_a_modificar.update_sueldo(valor_a_cambiar);
+                        Double valor_a_cambiar_s = scanner_valor_a_cambiar.nextDouble();
+                        docente_a_modificar.update_sueldo(valor_a_cambiar_s);
                         break;
                     case "TIT":
-                        String valor_a_cambiar = scanner_valor_a_cambiar.next();
-                        docente_a_modificar.update_titulo(valor_a_cambiar);
+                        String valor_a_cambiar_t = scanner_valor_a_cambiar.next();
+                        docente_a_modificar.update_titulo(valor_a_cambiar_t);
                         break;
                     default:
                         System.out.println("El valor introducido no se corresponde con ninguno de los permitodos.\nVolviendo al menu.");    
