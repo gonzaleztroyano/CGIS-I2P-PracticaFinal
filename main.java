@@ -98,22 +98,17 @@ class Main {
                     horario1.del_entrada_horario();
                     break;
                 case 24:
-                    System.out.println("hola");
-                    // TODO: asignar el metodo
                     // aqui puede ser interesante eliminar el objeto horario1 y volverlo a crear, directamente. Sin annadir datos quiza
                     horario1 = new horario("horario1");
                     break;
                 case 31:
-                    System.out.println("hola");
-                    // TODO: asignar el metodo
+                    horario1.get_entradas_by_asg();
                     break;
                 case 32:
-                    System.out.println("hola");
-                    // TODO: asignar el metodo
+                    horario1.get_entradas_by_aula();
                     break;
                 case 33:
-                    System.out.println("hola");
-                    // TODO: asignar el metodo
+                    horario1.get_entradas_by_docente();
                     break;
                 case 34:
                     horario1.get_entradas();
@@ -122,28 +117,28 @@ class Main {
                     horario1.aula_add();
                     break;
                 case 42:
-                    // TODO: 
+                    horario1.editar_aula();
                     break;
                 case 43:
                     horario1.aula_delete();
                     break;
                 case 44:
-                    // TODO: Pending --- Eliminar TODAS las aulas
+                    horario1.eliminar_aulas();
                     break;
                 case 45:
                     horario1.get_detalle_aulas();
                     break;
                 case 51:
-                    // TODO: Pending --- Agregar docente
+                    horario1.add_docente();
                     break;
                 case 52:
-                    // TODO: Pending --- Eliminar docente
+                    horario1.editar_docente();
                     break;
                 case 53:
                     horario1.docente_delete();
                     break;
                 case 54:
-                    // TODO: Pending --- Eliminar TODOS los docentes
+                    horario1.eliminar_docentes();
                     break;
                 case 55:
                     horario1.get_docente_listado();
@@ -161,25 +156,27 @@ class Main {
 
 
     public static void carga_inicial(horario hor) {
-        hor.asignatura_auto("I2P", "Introduccion a la Programacion", 8, 2);
-        hor.asignatura_auto("MCS", "Matematicas para la Computacion y Servicios", 9, 4);
-        hor.asignatura_auto("HFS", "Historia y Fundamentos de los Servicios", 4, 1);
-        hor.asignatura_auto("TDS", "Teoria de Sistemas", 10, 3);
-        hor.asignatura_auto("ADQ", "Arquitectura de Computadores", 8, 3);
-        hor.asignatura_auto("SDS", "Sociologia de los Servicios", 9, 2);
+
+        hor.add_docente_auto("12345678A","Manuel", "Sanchez", "Diaz", 2000.0, "Profesor Titular");
+        hor.add_docente_auto("23456789J","Cristina", "Gonzalez", "Pons", 3000.0, "Doctora");
+        hor.add_docente_auto("34567901C","Rodrigo", "Hidalgo", "Esteban", 1000.0, "Profesor asociado");
+        hor.add_docente_auto("45678012D","Lucia", "Jimenez", "Llorente", 3000.0, "Doctora");
+        hor.add_docente_auto("20458599E","Javier", "Airado", "Rodriguez", 2000.0, "Profesor Titular");
+        hor.add_docente_auto("50369736Z","Pablo", "Aguado", "Gonzalez", 2000.0, "Profesor Titular");
+
+
+        hor.asignatura_auto("I2P", "Introduccion a la Programacion", 8, 2, "50369736Z");
+        hor.asignatura_auto("MCS", "Matematicas para la Computacion y Servicios", 9, 4, "23456789J");
+        hor.asignatura_auto("HFS", "Historia y Fundamentos de los Servicios", 4, 1, "34567901C");
+        hor.asignatura_auto("TDS", "Teoria de Sistemas", 10, 3, "45678012D");
+        hor.asignatura_auto("ADQ", "Arquitectura de Computadores", 8, 3, "45678012D");
+        hor.asignatura_auto("SDS", "Sociologia de los Servicios", 9, 2, "45678012D");
 
         hor.add_aula_auto("G107", 30);
         hor.add_aula_auto("G108", 20);
         hor.add_aula_auto("G109", 25);
         hor.add_aula_auto("G110", 40);
         hor.add_aula_auto("G111", 35);
-
-        hor.add_docente_auto("12345678A","Manuel", "Sanchez", "Diaz");
-        hor.add_docente_auto("23456789J","Cristina", "Gonzalez", "Pons");
-        hor.add_docente_auto("34567901C","Rodrigo", "Hidalgo", "Esteban");
-        hor.add_docente_auto("45678012D","Lucia", "Jimenez", "Llorente");
-        hor.add_docente_auto("20458599E","Javier", "Airado", "Rodriguez");
-        hor.add_docente_auto("50369736Z","Pablo", "Aguado", "Gonzalez");
 
         hor.add_entrada_horario_auto("lunes", "G107", "TDS", 10);
         hor.add_entrada_horario_auto("martes", "G107", "MCS", 11);

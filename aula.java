@@ -20,6 +20,7 @@ public class aula {
     }
 
     public void get_lessons(){
+        int found = 0;
         for (dia d: dia) {
             System.out.println("    Dia: " + d.nombre);
             int i = 0;
@@ -27,11 +28,15 @@ public class aula {
                 if (h != null){
                     System.out.println("        Hora:          " + i + ":00 - " + (i+1) + ":00");
                     System.out.println("        Asignatura:    " + h.asignatura.codigo + ": " + h.asignatura.nombre);
+                    found++;
                 }
                 i++;
             }
             System.out.println("    -----------------");
         }
+        System.out.println("Se han encontrado " + found + " resultados");
     }
-
+    public void update_capacidad(int p_nueva_capacdad){
+        this.capacidad = p_nueva_capacdad;
+    }
 }

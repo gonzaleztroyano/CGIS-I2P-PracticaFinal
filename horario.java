@@ -44,6 +44,19 @@ public class horario {
         return;
     }
 
+    public boolean confirm_harmfull(){
+        System.out.println("\n ¡¡¡¡   ATENCION   !!! \n La accion que va a realizar es potencialmente peligrosa.");
+        System.out.println("Introduzca 'S' para confirmar, o cualquier otra tecla para continuar.");
+
+        Scanner scanner_conf = new Scanner(System.in);
+        String conf_edit_param = scanner_conf.next();
+        if (conf_edit_param.equals("S") || conf_edit_param.equals("s")) { // mayusculas o minisculas para facilitar la entrada de datos
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /* ***********************************************
      * ***********************************************
      *               Clases ASIGNATURA
@@ -53,20 +66,21 @@ public class horario {
 
         public void nueva_asignatura(){
             System.out.println("Bienvenido al proceso de creacion de asignaturas");
-            System.out.println("Introduzca, separados por espacios, los siguientes valores:\n 1. Codigo \n 2. Nombre \n 3. Total horas semana \n 4. Maximo horas dia");
+            System.out.println("Introduzca, separados por espacios, los siguientes valores:\n 1. Codigo \n 2. Nombre \n 3. Total horas semana \n 4. Maximo horas dia\n 5. DNI Docente");
             Scanner datos_add = new Scanner(System.in);
             String cod = datos_add.next();
             String nom = datos_add.next();
             int ths = datos_add.nextInt();
             int mhd = datos_add.nextInt();
-            asignaturas.add(new asignatura(cod, nom, ths, mhd));
+            String dni_doc = datos_add.next();
+            asignaturas.add(new asignatura(cod, nom, ths, mhd, docente_by_dni(dni_doc)));
         }
-        public void asignatura_auto(String cod, String nom, int ths, int mhd){
-            asignaturas.add(new asignatura(cod, nom, ths, mhd)); // TODO: Pending docente add
+        public void asignatura_auto(String cod, String nom, int ths, int mhd, String dni_doc){
+            asignaturas.add(new asignatura(cod, nom, ths, mhd, docente_by_dni(dni_doc)));
         }
         public void listar_asignaturas(){
             for (asignatura i : asignaturas) {
-                System.out.println(i.codigo + ": " + i.nombre); // TODO: get via method? See docente getfullname
+                i.show_id_and_name();
             }
             waiter();
         }
@@ -154,8 +168,12 @@ public class horario {
         }
 
         public void eliminar_asignaturas(){
-            asignaturas.clear();
-            System.out.println("TODAS Las asignaturas se han eliminado correctamente.");
+            if(confirm_harmfull()){
+                asignaturas.clear();
+                System.out.println("TODAS Las asignaturas se han eliminado correctamente.");
+            } else {
+                System.out.println("Se ha cancelado la operacion. Volviendo al menu.");
+            }
             waiter();
         }
 
@@ -415,10 +433,98 @@ public class horario {
         waiter();
     }
 
+    public void get_entradas_by_aula(){
+        get_aula_codes();
+        System.out.println("Introduzca el código del aula a listar:");
+        Scanner scanner_aula_a_listar = new Scanner(System.in);
+        String aula_a_listar = scanner_aula_a_listar.next();
+        if (asignatura_by_id(aula_a_listar) == null){
+            // Si entra en null significa que no hay ningun aula con ese ID dada de alta. Por tanto, no hay nada que listar.
+            System.out.println("El ID introducido no se corresponde con ningun aula registrada. Volviendo al menu");
+            waiter();
+            return;
+        } else {
+            aula au_a_listar = aula_by_id(aula_a_listar);
+            for (aula a: aulas) {
+                if (a == au_a_listar){
+                    a.get_lessons();
+                }
+            }
+        }
+        waiter();
+    }
 
+    public void get_entradas_by_asg() {
+        System.out.println("Mostrando asignaturas...");
+        listar_asignaturas();
+        System.out.println("Introduzca el código de la asignatura a listar:");
+        Scanner scanner_asg_a_listar = new Scanner(System.in);
+        String asg_a_listar = scanner_asg_a_listar.next();
+        if (asignatura_by_id(asg_a_listar) == null) {
+            // Si entra en null significa que no hay ninguna asignatura con ese ID dada de
+            // alta. Por tanto, no hay nada que listar.
+            System.out.println("El ID introducido no se corresponde con ninguna asignatura. Volviendo al menu");
+            waiter();
+            return;
+        } else {
+            int found = 0;
+            asignatura asignatura_para_listar = asignatura_by_id(asg_a_listar);
+            for (aula a : aulas) {
+                for (dia d : a.dia) {
+                    int i = 0;
+                    for (hora h : d.horas) {
+                        if (h.asignatura == asignatura_para_listar) {
+                            System.out.println(
+                                    "    " + a.id + "   " + d.nombre + "    " + i + ":00 - " + (i + 1) + ":00");
+                            found++;
+                        }
+                        i++;
+                    }
+                }
+            }
+            if (found == 0) {
+                System.out.println("\n  --- No se han encontrado resultados ---");
+            } else {
+                System.out.println("\n   Se han encontrado " + found + " resultados. ");
+            }
+            waiter();
+        }
+    }
 
-    // TODO: listar entradas del un dia
-    // TODO: listar todas las entradas de todos los dias
+    public void get_entradas_by_docente(){
+        get_docente_listado();
+        System.out.println("\nIntroduzca DNI del docente para el que desea ver las clases:");
+        Scanner scanner_dni_docente_a_listar = new Scanner(System.in);
+        String dni_docente_a_listar = scanner_dni_docente_a_listar.next();
+        if (docente_by_dni(dni_docente_a_listar) == null) {
+            // Si entra en null significa que no hay ningun docente con ese DNI dada de alta. Por tanto, no hay nada que listar.
+            System.out.println("El DNI introducido no se corresponde con ningun docente registrado. Volviendo al menu");
+            waiter();
+            return;
+        } else {
+            int found = 0;
+            docente docente_a_listar = docente_by_dni(dni_docente_a_listar);
+            for (aula a: aulas) {
+                for (dia d: a.dia){
+                    int i = 0;
+                    for (hora h: d.horas){
+                        if (h.asignatura.docente == docente_a_listar) {
+                            //                          aula           nombre_dia                    hora                     asignatura
+                            System.out.println("    " + a.id + "   " + d.nombre + "    " + i + ":00 - " + (i+1) + ":00    " + h.asignatura.codigo);
+                            found++;
+                        }
+                        i++;
+                    }
+                }
+            }
+            if (found == 0) {
+                System.out.println("\n  --- No se han encontrado resultados ---");
+            } else {
+                System.out.println("\n   Se han encontrado " + found + " resultados. ");
+            }
+        }
+    }
+
 
     /* ***********************************************
      * ***********************************************
@@ -443,11 +549,13 @@ public class horario {
             // TODO: Check if requested exists. Maybe return an array?
             Scanner scanner = new Scanner(System.in);
             String cod_a_buscar = scanner.next();
-            for (aula i: aulas) {
-                    if (i.id.equals(cod_a_buscar)) {
-                        i.get_details();
-                    }
-                }
+            aula aula_a_ver_detalles = aula_by_id(cod_a_buscar);
+            if (aula_a_ver_detalles == null) {
+                System.out.println("No se encuetra ningun aula con el ID indicado. Volviendo al menu...");
+            } else {
+                aula_a_ver_detalles.get_details();
+            }
+            waiter();
         }
 
         public void get_detalle_aulas(){
@@ -496,9 +604,50 @@ public class horario {
             aulas.add(new aula(creacion_aula, capacidad_aula_nueva));
             System.out.println("Su aula ha sido creada con exito.");
         }
-        
 
-        // TODO: asistente edicion aula
+        public void eliminar_aulas(){
+            if(confirm_harmfull()){
+                aulas.clear();
+                System.out.println("TODAS los AULAS se han eliminado correctamente.");
+            } else {
+                System.out.println("Se ha cancelado la operacion. Volviendo al menu.");
+            }
+            waiter();
+        }
+        
+        // EJEMPLO: este es un buen ejemplo de como modificar/acceder a private vs public properties
+        public void editar_aula(){
+            get_aula_codes();
+            System.out.println("\n Introduzca el ID del aula que desea editar:");
+            Scanner scanner_id_aula_a_editar = new Scanner(System.in);
+            String id_aula_a_editar = scanner_id_aula_a_editar.next();
+            if (aula_by_id(id_aula_a_editar) == null) {
+                System.out.println("El ID introducido no se corresponde con ninguno registrado en la base de datos");
+            } else {
+                aula aula_a_editar = aula_by_id(id_aula_a_editar);
+                aula_a_editar.get_details();
+                System.out.println("¿Desea cambiar el ID o la capacidad? [ID/CAP]");
+                Scanner scanner_cosa_a_cambiar = new Scanner(System.in);
+                String cosa_a_cambiar = scanner_cosa_a_cambiar.next();
+                switch (cosa_a_cambiar){
+                    case "ID": // no se pone brak para que haga de "OR" __ +info https://logfetch.com/java-use-or-switch-case-statement/#use-or-operator-by-removing-break
+                    case "id":
+                        System.out.println("Introduzca el nuevo ID que desea asignar al aula:");
+                        Scanner scanner_valor_nuevo_id = new Scanner(System.in);
+                        String nuevo_id = scanner_valor_nuevo_id.next();
+                        aula_a_editar.id = nuevo_id;
+                        break;
+                    case "CAP":
+                    case "cap":
+                        System.out.println("Introduzca la nueva capacidad que desea asignar al aula:");
+                        Scanner scanner_valor_nueva_cap = new Scanner(System.in);
+                        int valor_nueva_cap = scanner_valor_nueva_cap.nextInt();
+                        aula_a_editar.update_capacidad(valor_nueva_cap);
+                }
+                System.out.println("Se ha actualizado correctamente. ");
+            }
+            waiter();
+        }
 
     /* ***********************************************
      * ***********************************************
@@ -512,23 +661,29 @@ public class horario {
             for (docente i: docentes) {
                 System.out.println(i.get_dni());
             }
+            waiter();
         }
 
         public void get_docente_listado(){
             System.out.println("DNIs registrados en este momento: ");
             for (docente i: docentes) {
-                System.out.println(i.get_dni() + ": " + i.get_fullname());
+                i.get_details();
             }
             waiter();
         }
 
-        public void add_docente_auto(String dni, String nombre, String apellido1, String apellido2){
-            docentes.add(new docente(dni, nombre, apellido1, apellido2));
+        public void get_listado_docente_name_and_dni(){
+            for (docente d: docentes){
+                System.out.println(d.get_fullname_and_dni());
+            }
+        }
+
+        public void add_docente_auto(String dni, String nombre, String apellido1, String apellido2, Double p_sueldo, String p_tit){
+            docentes.add(new docente(dni, nombre, apellido1, apellido2, p_sueldo, p_tit));
         }
 
         public void docente_delete(){
             System.out.println("Por favor, introduzca el DNI del docente que desee dar de baja:");
-            
             Scanner scanner = new Scanner(System.in);
             String docente_de_baja = scanner.next();
             docente docente_a_eliminar = docente_by_dni(docente_de_baja);
@@ -552,7 +707,105 @@ public class horario {
             return null;
         }
 
-        // TODO: asistente adicion docente
-        // TODO: asistente edicion docente
-        
+        public void add_docente(){
+            System.out.println("\nTe damos la bienvenida al asistente de adicion del equipo docente!");
+            System.out.println("Introduzca, por favor, el DNI del nuevo docente que desea dar de alta");
+            Scanner scanner_add_doce_dni = new Scanner(System.in);
+            String add_doce_dni = scanner_add_doce_dni.next();
+            if (docente_by_dni(add_doce_dni) == null){
+                // Si entra en null significa que no hay ningún docente dado de alta. Por tanto, podemos annadirlo. 
+                System.out.println("Introduzca, por favor, los datos que se le solicitan. \n   NOMBRE:");
+                Scanner scanner_add_doce_nombre = new Scanner(System.in);
+                System.out.println("   Primer Apellido: ");
+                Scanner scanner_add_doce_ape1 = new Scanner(System.in);
+                System.out.println("   Segundo Apellido: ");
+                Scanner scanner_add_doce_ape2 = new Scanner(System.in);
+                System.out.println("   Sueldo (formato 1000.0): ");
+                Scanner scanner_add_doce_sueldo = new Scanner(System.in);
+                System.out.println("   Titulo: ");
+                Scanner scanner_add_doce_tit = new Scanner(System.in);
+
+                // Seria interesante hacer aqui comprobaciones con hasNextXXXX en los Scanners para evitar que java devuelva errores feos...
+                
+                String add_doce_nombre = scanner_add_doce_nombre.next();
+                String add_doce_ape1 = scanner_add_doce_ape1.next();
+                String add_doce_ape2 = scanner_add_doce_ape2.next();
+                Double add_doce_sueldo = scanner_add_doce_sueldo.nextDouble();
+                String add_doce_tit = scanner_add_doce_tit.next();
+
+                docentes.add(new docente(add_doce_dni, add_doce_nombre, add_doce_ape1, add_doce_ape2, add_doce_sueldo, add_doce_tit));
+
+                System.out.println("Se ha añadido correctamente el docente");
+                waiter();
+
+            } else {
+                // si entra aqui significa que ya hay un/una docente con ese DNI. por tanto, no podemos annadirlo.
+                // Mostramos también el nombre del registro ya annadido para ayudar al usuario. 
+                System.out.println("ERROR: ya existe un registro para ese DNI: " + docente_by_dni(add_doce_dni).get_fullname());
+                System.out.println("Puede, si asi lo desea, eliminar el registro o modificarlo desde las diferentes opciones del menu.");
+                waiter();
+            }
+
+        }
+
+        public void eliminar_docentes(){
+            if(confirm_harmfull()){
+                docentes.clear();
+                System.out.println("TODOS los DOCENTES se han eliminado correctamente.");
+            } else {
+                System.out.println("Se ha cancelado la operacion. Volviendo al menu.");
+            }
+            waiter();
+        }
+
+        public void editar_docente(){
+            System.out.println("Mostrando lista de docentes: ");
+            get_listado_docente_name_and_dni();
+            System.out.println("Introduzca el DNI del docente que desea editar: ");
+            Scanner scanner = new Scanner(System.in);
+            String doce_a_buscar = scanner.next();
+            if (docente_by_dni(doce_a_buscar) == null){
+                // Si es null el dni introducido no existe
+                System.out.println("El DNI introducido no se corresponde con ninguno registrado en la base de datos");
+            } else {
+                docente docente_a_modificar = docente_by_dni(doce_a_buscar);
+                System.out.print("Los datos actuales del docente son:");
+                docente_a_modificar.get_details();
+                System.out.println("Introduzca la clave del campo a variar\nLa claves estan formadas por las 3-4 primeras letras mayusculas mostradas en el listado");
+                Scanner scanner_codigo_a_cambiar = new Scanner(System.in);
+                String codigo_a_cambiar = scanner_codigo_a_cambiar.next();
+                System.out.println("\nIntroduzca el nuevo contenido que desea actualizar en el campo indicado: ");
+                Scanner scanner_valor_a_cambiar = new Scanner(System.in);
+                switch (codigo_a_cambiar) {
+                    case "DNI":
+                        String valor_a_cambiar = scanner_valor_a_cambiar.next();
+                        docente_a_modificar.dni = valor_a_cambiar;
+                        break;
+                    case "NOM":
+                        String valor_a_cambiar = scanner_valor_a_cambiar.next();
+                        docente_a_modificar.update_nombre(valor_a_cambiar);
+                        break;
+                    case "APE1":
+                        String valor_a_cambiar = scanner_valor_a_cambiar.next();
+                        docente_a_modificar.update_ape1(valor_a_cambiar);
+                        break;
+                    case "APE2":
+                        String valor_a_cambiar = scanner_valor_a_cambiar.next();
+                        docente_a_modificar.update_ape2(valor_a_cambiar);
+                        break;
+                    case "SUE":
+                        Double valor_a_cambiar = scanner_valor_a_cambiar.nextDouble();
+                        docente_a_modificar.update_sueldo(valor_a_cambiar);
+                        break;
+                    case "TIT":
+                        String valor_a_cambiar = scanner_valor_a_cambiar.next();
+                        docente_a_modificar.update_titulo(valor_a_cambiar);
+                        break;
+                    default:
+                        System.out.println("El valor introducido no se corresponde con ninguno de los permitodos.\nVolviendo al menu.");    
+                        // Aqui no se llama a waiter porque esta al final.
+                }
+            }
+            waiter();
+        }        
 }
