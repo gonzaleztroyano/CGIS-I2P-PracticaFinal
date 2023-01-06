@@ -26,7 +26,7 @@ public class horario {
                 return 3;
             case "viernes":
                 return 4;
-            case "sadado":
+            case "sabado":
                 return 5;
             case "domingo":
                 return 6;
@@ -57,6 +57,14 @@ public class horario {
         }
     }
 
+
+    public void ClearScreen(){
+        System.out.print("Everything on the console will cleared");
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
+    // https://www.delftstack.com/es/howto/java/java-clear-console/
+
     /* ***********************************************
      * ***********************************************
      *               Clases ASIGNATURA
@@ -66,16 +74,30 @@ public class horario {
 
         public void nueva_asignatura(){
             System.out.println("Bienvenido al proceso de creacion de asignaturas");
-            System.out.println("Introduzca, separados por espacios, los siguientes valores:\n 1. Codigo \n 2. Nombre \n 3. Total horas semana \n 4. Maximo horas dia\n 5. DNI Docente");
-            System.out.println("Como referencia, se muestran a continuacion los DNIs de los docentes.");
-            get_listado_docente_name_and_dni();            
-            Scanner datos_add = new Scanner(System.in);
-            String cod = datos_add.next();
-            String nom = datos_add.next();
-            int ths = datos_add.nextInt();
-            int mhd = datos_add.nextInt();
-            String dni_doc = datos_add.next();
-            asignaturas.add(new asignatura(cod, nom, ths, mhd, docente_by_dni(dni_doc)));
+
+            System.out.println("Por favor, introduzca los siguientes datos:\nCodigo:");
+            Scanner scanner_add_asg_cod = new Scanner(System.in);
+            String add_asg_cod = scanner_add_asg_cod.nextLine();
+
+            System.out.println("Nombre de la asignatura");
+            Scanner scanner_add_asg_nom = new Scanner(System.in);
+            String add_asg_nom = scanner_add_asg_nom.nextLine();
+
+            System.out.println("Total de horas a la semana:");
+            Scanner scanner_add_asg_ths = new Scanner(System.in);
+            int add_asg_ths = scanner_add_asg_ths.nextInt();
+
+            System.out.println("Máximo horas al dia:");
+            Scanner scanner_add_asg_mhd = new Scanner(System.in);
+            int add_asg_mhd = scanner_add_asg_mhd.nextInt();
+
+            System.out.println("Docente que impartira la nueva asignatura");
+            System.out.println("  > Como referencia, se muestran a continuacion los DNIs de los docentes.");
+            get_listado_docente_name_and_dni();  
+            Scanner scanner_add_asg_doc = new Scanner(System.in);
+            String add_asg_doc = scanner_add_asg_doc.nextLine();
+
+            asignaturas.add(new asignatura(add_asg_cod, add_asg_nom, add_asg_ths, add_asg_mhd, docente_by_dni(add_asg_doc)));
             System.out.println("Se ha creado correctamente la asignatura.");
             waiter();
         }
@@ -83,9 +105,13 @@ public class horario {
             asignaturas.add(new asignatura(cod, nom, ths, mhd, docente_by_dni(dni_doc)));
         }
         public void listar_asignaturas(){
+            int n = 0;
+            System.out.println("\n Listando asignaturas...\n");
             for (asignatura i : asignaturas) {
                 i.show_id_and_name();
+                n++;
             }
+            System.out.println("  \nSe han encontrado " + n + " asignaturas.");
             waiter();
         }
         public void get_asg_codes(){
@@ -98,6 +124,7 @@ public class horario {
             get_asg_codes();
             Scanner scanner = new Scanner(System.in);
             String cod_a_buscar = scanner.next();
+            System.out.println("\n");
             for (asignatura i: asignaturas) {
                 if (i.codigo.equals(cod_a_buscar)) {
                     i.get_details();
@@ -124,7 +151,7 @@ public class horario {
                     Scanner scannernuevo_valor = new Scanner(System.in);
                     
                     if (tres_primeros_caracteres.equals("COD") || tres_primeros_caracteres.equals("NOM")){
-                        String valor_a_cambiar = scannernuevo_valor.next();
+                        String valor_a_cambiar = scannernuevo_valor.nextLine();
                         if (tres_primeros_caracteres.equals("COD")) {
                             i.codigo = valor_a_cambiar;
                         } else {
@@ -188,14 +215,13 @@ public class horario {
      * ***********************************************
     */
 
-    // TODO: PENDING -- update value registros_anadidos at aula on ADD
     // TODO: PENDING -- update value horas_actual at asignatura on ADD
 
     public void add_entrada_horario_auto(String p_dia, String id_aula, String id_asignatura, int p_hora) {
         int dia_deseado = 0;
         aula aula_deseada = aula_by_id(id_aula);
         if (aula_deseada == null) {
-            System.out.println("El parametro introducido para el codigo de aula no es valido. Revise este valor, por favor");
+            System.out.println("\n   ATENCION: El parametro introducido para el codigo de aula no es valido. Revise este valor, por favor.");
             return;
         }
         asignatura asignatura_deseada = asignatura_by_id(id_asignatura);
@@ -208,19 +234,21 @@ public class horario {
         // Si la funcion devuelve 99 significa que el parametro introducido no es
         // valido.
         if (dia_deseado == 99) {
-            System.out.println("El parametro introducido para el dia de la semana no es valido. Revise este valor, por favor");
+            System.out.println("\n   ATENCION:El parametro introducido para el dia de la semana no es valido. Revise este valor, por favor.");
             return;
         }
         // Si la asignatura no ha alcanzado su limite de 'ocupacion', permitira la
         // creacion de la hora. En caso contrario, else, dara mensaje de error y
         // retornara.
-        if (asignatura_deseada.can_be_scheduled_more()) {
+        if (asignatura_deseada.can_be_scheduled_more(dow_string_to_int(p_dia.toLowerCase()))) {
             aula_deseada.dia[dia_deseado].horas[p_hora] = new hora(asignatura_deseada);
+            asignatura_deseada.update_scheduled_by_day("+", dow_string_to_int(p_dia.toLowerCase()));
         } else {
             System.out.println("No es posible crear una nueva entrada para " + id_asignatura
-                    + "porque se ha alcanzado su limite (" + asignatura_deseada.max_horas_dia + ")");
+                    + " porque se ha alcanzado su limite (" + asignatura_deseada.max_horas_dia + ")");
             return; // return sirve para volver al menu, o a lo que ha llamado a la funcion inicialmente
         }
+        aula_deseada.registros_anadidos++;
     }
 
     public void add_entrada_horario() {
@@ -234,7 +262,7 @@ public class horario {
         
         aula aula_deseada = aula_by_id(id_aula);
         if (aula_deseada == null) {
-            System.out.println("El parametro introducido para el codigo de aula no es valido. Revise este valor, por favor");
+            System.out.println("\n   ATENCION: El parametro introducido para el codigo de aula no es valido. Revise este valor, por favor.");
             waiter();
             return;
         }
@@ -260,7 +288,7 @@ public class horario {
         // Si la funcion devuelve 99 significa que el parametro introducido no es
         // valido.
         if (dia_deseado == 99) {
-            System.out.println("El parametro introducido para el dia de la semana no es valido. Revise este valor, por favor");
+            System.out.println("\n   ATENCION:El parametro introducido para el dia de la semana no es valido. Revise este valor, por favor.");
             waiter();
             return;
         }
@@ -269,7 +297,7 @@ public class horario {
         Scanner scanner_p_hora = new Scanner(System.in);
         int p_hora = scanner_p_hora.nextInt();
         if (p_hora < 0 || p_hora > 24){
-            System.out.println("El parametro introducido para la hora del dia no es valido. Revise este valor, por favor");
+            System.out.println("\n  ATENCION: El parametro introducido para la hora del dia no es valido. Revise este valor, por favor.");
             waiter();
             return;
         }
@@ -280,18 +308,24 @@ public class horario {
         // creacion de la hora. En caso contrario, else, dara mensaje de error y
         // retornara.
 
-        if (asignatura_deseada.can_be_scheduled_more()) {
+        if (asignatura_deseada.can_be_scheduled_more(dow_string_to_int(p_dia.toLowerCase()))) {
             // Si es posibe annadir una nueva entradas, ahora llega el momento de comprobar si en esa hora ya existe una entrada. 
             // Una posible mejora seria permitir la eliminacion directamente aqui...
-            if (aula_deseada.dia[dia_deseado].horas[p_hora].asignatura == null){
-                aula_deseada.dia[dia_deseado].horas[p_hora] = new hora(asignatura_deseada);
-            } else {
-                // Si NO es null, else, significa que en esa hora ya existe una entrada. Por tanto, no la annadimos.
-                System.out.println("No es posible crear una nueva entrada para " + id_asignatura
-                    + " porque ya existe una clase programada a esa misma hora.");
-                waiter();
-                return;
-            }
+            
+            aula_deseada.dia[dia_deseado].horas[p_hora] = new hora(asignatura_deseada);
+            asignatura_deseada.update_scheduled_by_day("+", dow_string_to_int(p_dia.toLowerCase()));
+            aula_deseada.registros_anadidos++;
+            // TODO: revisar esto. Puede que el problema no sea tanto porque .asignatura sea null sino que algo en la ruta si lo sea. Por tanto, no llegara hasta ahi. Queda pdte comprobarlo. 
+
+            // if ( aula_deseada.dia[dia_deseado].horas[p_hora].asignatura == null ){
+            //     aula_deseada.dia[dia_deseado].horas[p_hora] = new hora(asignatura_deseada);
+            // } else {
+            //     // Si NO es null, else, significa que en esa hora ya existe una entrada. Por tanto, no la annadimos.
+            //     System.out.println("No es posible crear una nueva entrada para " + id_asignatura
+            //         + " porque ya existe una clase programada a esa misma hora.");
+            //     waiter();
+            //     return;
+            // }
         } else {
             System.out.println("No es posible crear una nueva entrada para " + id_asignatura
                     + "porque se ha alcanzado su limite (" + asignatura_deseada.max_horas_dia + ")");
@@ -312,12 +346,12 @@ public class horario {
         
         aula aula_deseada = aula_by_id(id_aula);
         if (aula_deseada == null) {
-            System.out.println("El parametro introducido para el codigo de aula no es valido. Revise este valor, por favor");
+            System.out.println("\n   ATENCION: El parametro introducido para el codigo de aula no es valido. Revise este valor, por favor.");
             waiter();
             return;
         }
         
-        System.out.println("En el aula indicada anteriormente, " + id_aula + " se encuentran agregadas las siguentes entradas:");
+        System.out.println("En el aula indicada anteriormente, " + id_aula + ", se encuentran agregadas las siguentes entradas:");
         aula_deseada.get_lessons();
 
         System.out.println("    Introduzca el dia para el cual desea editar una entrada\n Valores validos: ");
@@ -330,7 +364,7 @@ public class horario {
         // Si la funcion devuelve 99 significa que el parametro introducido no es
         // valido.
         if (dia_deseado == 99) {
-            System.out.println("El parametro introducido para el dia de la semana no es valido. Revise este valor, por favor");
+            System.out.println("\n   ATENCION:\n   ATENCION:El parametro introducido para el dia de la semana no es valido. Revise este valor, por favor.");
             waiter();
             return;
         }
@@ -351,7 +385,7 @@ public class horario {
         Scanner scanner_conf_edit = new Scanner(System.in);
         String conf_edit_param = scanner_conf_edit.next();
         if (conf_edit_param.equals("S") || conf_edit_param.equals("s")) { // mayusculas o minisculas para facilitar la entrada de datos
-            System.out.println("Introduzca la nueva asignatura por la que desea sustituir" + aula_deseada.dia[dia_deseado].horas[p_hora].asignatura.nombre);
+            System.out.println("Introduzca la nueva asignatura por la que desea sustituir " + aula_deseada.dia[dia_deseado].horas[p_hora].asignatura.nombre);
             Scanner scanner_nueva_asig = new Scanner(System.in);
             String id_asignatura = scanner_nueva_asig.next();
             asignatura asignatura_deseada = asignatura_by_id(id_asignatura);
@@ -360,8 +394,9 @@ public class horario {
                 waiter();
                 return;
             }
-            if (asignatura_deseada.can_be_scheduled_more()) {
+            if (asignatura_deseada.can_be_scheduled_more(dow_string_to_int(p_dia.toLowerCase()))) {
                 aula_deseada.dia[dia_deseado].horas[p_hora] = new hora(asignatura_deseada);
+                asignatura_deseada.update_scheduled_by_day("+", dow_string_to_int(p_dia.toLowerCase()));
                 System.out.println("Se ha creado correctamente la entrada indicada. Regresando al menu...");
                 waiter();
                 return;
@@ -389,7 +424,7 @@ public class horario {
         
         aula aula_deseada = aula_by_id(id_aula);
         if (aula_deseada == null) {
-            System.out.println("El parametro introducido para el codigo de aula no es valido. Revise este valor, por favor");
+            System.out.println("\n   ATENCION: El parametro introducido para el codigo de aula no es valido. Revise este valor, por favor.");
             waiter();
             return;
         }
@@ -406,7 +441,7 @@ public class horario {
         // Si la funcion devuelve 99 significa que el parametro introducido no es
         // valido.
         if (dia_deseado == 99) {
-            System.out.println("El parametro introducido para el dia de la semana no es valido. Revise este valor, por favor");
+            System.out.println("\n   ATENCION:El parametro introducido para el dia de la semana no es valido. Revise este valor, por favor.");
             waiter();
             return;
         }
@@ -420,10 +455,10 @@ public class horario {
             return;
         }
         // AQUI se produce la eliminacion de la entrada
-        aula_deseada.dia[dia_deseado].horas[p_hora] =null;
+        asignatura asignatura_deseada = aula_deseada.dia[dia_deseado].horas[p_hora].asignatura;
+        asignatura_deseada.update_scheduled_by_day("-", dow_string_to_int(p_dia.toLowerCase()));
+        aula_deseada.dia[dia_deseado].horas[p_hora] = null;
         System.out.println("Se ha eliminado correctamente la entrada indicada");
-        waiter();
-
         waiter();
     }
 
@@ -442,7 +477,7 @@ public class horario {
         System.out.println("Introduzca el codigo del aula a listar:");
         Scanner scanner_aula_a_listar = new Scanner(System.in);
         String aula_a_listar = scanner_aula_a_listar.next();
-        if (asignatura_by_id(aula_a_listar) == null){
+        if (aula_by_id(aula_a_listar) == null){
             // Si entra en null significa que no hay ningun aula con ese ID dada de alta. Por tanto, no hay nada que listar.
             System.out.println("El ID introducido no se corresponde con ningun aula registrada. Volviendo al menu");
             waiter();
@@ -457,6 +492,7 @@ public class horario {
         }
         waiter();
     }
+
 
     public void get_entradas_by_asg() {
         System.out.println("Mostrando asignaturas...");
@@ -726,29 +762,33 @@ public class horario {
             Scanner scanner_add_doce_dni = new Scanner(System.in);
             String add_doce_dni = scanner_add_doce_dni.next();
             if (docente_by_dni(add_doce_dni) == null){
-                // Si entra en null significa que no hay ningún docente dado de alta. Por tanto, podemos annadirlo. 
+                // Si entra en null significa que no hay ningun docente dado de alta. Por tanto, podemos annadirlo. 
                 System.out.println("Introduzca, por favor, los datos que se le solicitan. \n   NOMBRE:");
                 Scanner scanner_add_doce_nombre = new Scanner(System.in);
+                
+                
                 System.out.println("   Primer Apellido: ");
                 Scanner scanner_add_doce_ape1 = new Scanner(System.in);
+                String add_doce_ape1 = scanner_add_doce_ape1.nextLine();
+                
                 System.out.println("   Segundo Apellido: ");
                 Scanner scanner_add_doce_ape2 = new Scanner(System.in);
+                String add_doce_ape2 = scanner_add_doce_ape2.nextLine();
+                
                 System.out.println("   Sueldo (formato 1000.0): ");
                 Scanner scanner_add_doce_sueldo = new Scanner(System.in);
+                Double add_doce_sueldo = scanner_add_doce_sueldo.nextDouble();
+                
                 System.out.println("   Titulo: ");
                 Scanner scanner_add_doce_tit = new Scanner(System.in);
 
+                String add_doce_tit = scanner_add_doce_tit.nextLine();
+
                 // Seria interesante hacer aqui comprobaciones con hasNextXXXX en los Scanners para evitar que java devuelva errores feos...
-                
-                String add_doce_nombre = scanner_add_doce_nombre.next();
-                String add_doce_ape1 = scanner_add_doce_ape1.next();
-                String add_doce_ape2 = scanner_add_doce_ape2.next();
-                Double add_doce_sueldo = scanner_add_doce_sueldo.nextDouble();
-                String add_doce_tit = scanner_add_doce_tit.next();
 
                 docentes.add(new docente(add_doce_dni, add_doce_nombre, add_doce_ape1, add_doce_ape2, add_doce_sueldo, add_doce_tit));
 
-                System.out.println("Se ha añadido correctamente el docente");
+                System.out.println("Se ha annadido correctamente el docente");
                 waiter();
 
             } else {

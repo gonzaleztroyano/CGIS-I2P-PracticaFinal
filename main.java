@@ -25,6 +25,7 @@ class Main {
 
         int num = 0;
         while (num != 6) { // Este valor solo tomara 6 si se selecciona la opcion 6 del menu. De no ser asi, volvera a ejecutarse la funcion de forma continua.
+            horario1.ClearScreen();
             System.out.println("\n\n\n\n\n ================  MENU  ===============\n\n");
             System.out.println("Elija una de las siguientes opciones:");
 
@@ -35,12 +36,15 @@ class Main {
             System.out.println("    1.3. Eliminar una asignatura");
             System.out.println("    1.4. Borrar TODAS las asiganturas");
             System.out.println("    1.5. Listar todas las asignaturas");
+            System.out.println("    1.6. Ver los detalles de una asignatura");
+
 
             System.out.println("\n2. Definir horario:");
             System.out.println("    2.1. Agregar una entrada al horario");
             System.out.println("    2.2. Editar una entrada del horario");
             System.out.println("    2.3. Eliminar una entrada del horario");
             System.out.println("    2.4. Borrar todo el horario");
+            System.out.println("    2.5. Restaurar horario/Cargar datos de muestra");
 
             System.out.println("\n3. Mostrar horario:");
             System.out.println("    3.1. Busqueda por asignatura");
@@ -69,80 +73,117 @@ class Main {
             Scanner scanner = new Scanner(System.in);
             num = scanner.nextInt();
 
-
             switch (num) {
                 case 11:
+                    horario1.ClearScreen();
                     horario1.nueva_asignatura();
                     break;
                 case 12:
+                    horario1.ClearScreen();
                     horario1.editar_asignatura();
                     break;
                 case 13:
+                    horario1.ClearScreen();
                     horario1.eliminar_asignatura();
                     break;
                 case 14:
+                    horario1.ClearScreen();
                     horario1.eliminar_asignaturas();
                     break;
                 case 15:
+                    horario1.ClearScreen();
                     horario1.listar_asignaturas();
                     break;
+                case 16:
+                    horario1.ClearScreen();
+                    horario1.detalle_asignatura();
+                    break;
                 case 21:
+                    horario1.ClearScreen();
                     horario1.add_entrada_horario();
                     break;
                 case 22:
+                    horario1.ClearScreen();
                     horario1.edit_entrada_horario();
                     break;
                 case 23:
+                    horario1.ClearScreen();
                     horario1.del_entrada_horario();
                     break;
                 case 24:
+                    horario1.ClearScreen();
                     // aqui puede ser interesante eliminar el objeto horario1 y volverlo a crear, directamente. Sin annadir datos quiza
                     horario1 = new horario("horario1");
+                    System.out.println("Se han borrado todos los datos de la base de datos."); // Evidentemente no hay base de datos, pero asi queda mas guay
+                    horario1.waiter();
+                    break;
+                case 25:
+                    horario1.ClearScreen();
+                    horario1 = new horario("horario1");
+                    carga_inicial(horario1);
+                    System.out.println("Se ha restaurado el horario a su estado inicial.");
+                    horario1.waiter();
                     break;
                 case 31:
+                    horario1.ClearScreen();
                     horario1.get_entradas_by_asg();
                     break;
                 case 32:
+                    horario1.ClearScreen();
                     horario1.get_entradas_by_aula();
                     break;
                 case 33:
+                    horario1.ClearScreen();
                     horario1.get_entradas_by_docente();
                     break;
                 case 34:
+                    horario1.ClearScreen();
                     horario1.get_entradas();
                     break;
                 case 41:
+                    horario1.ClearScreen();
                     horario1.aula_add();
                     break;
                 case 42:
+                    horario1.ClearScreen();
                     horario1.editar_aula();
                     break;
                 case 43:
+                    horario1.ClearScreen();
                     horario1.aula_delete();
                     break;
                 case 44:
+                    horario1.ClearScreen();
                     horario1.eliminar_aulas();
                     break;
                 case 45:
+                    horario1.ClearScreen();
                     horario1.get_detalle_aulas();
                     break;
                 case 51:
+                    horario1.ClearScreen();
                     horario1.add_docente();
                     break;
                 case 52:
+                    horario1.ClearScreen();
                     horario1.editar_docente();
                     break;
                 case 53:
+                    horario1.ClearScreen();
                     horario1.docente_delete();
                     break;
                 case 54:
+                    horario1.ClearScreen();
                     horario1.eliminar_docentes();
                     break;
                 case 55:
+                    horario1.ClearScreen();
                     horario1.get_docente_listado();
                     break;
                 case 6:
-                    System.out.println("Gracias por usar esta apliacion");
+                    horario1.ClearScreen();
+                    System.out.println("Gracias por usar esta apliacion\nSaliendo...\n");
+                    break;
                 default:
                         System.out.println("El numero que ha introducido no es valido. Por favor, intruzca uno de nuevo.");
                         break;
@@ -176,10 +217,57 @@ class Main {
         hor.add_aula_auto("G110", 40);
         hor.add_aula_auto("G111", 35);
 
+
         hor.add_entrada_horario_auto("lunes", "G107", "TDS", 10);
-        hor.add_entrada_horario_auto("martes", "G107", "MCS", 11);
-        hor.add_entrada_horario_auto("miercoles", "G109", "I2P", 9);
-        hor.add_entrada_horario_auto("miercoles", "G107", "TDS", 10);
+        hor.add_entrada_horario_auto("martes", "G108", "TDS", 9);
+        hor.add_entrada_horario_auto("miercoles", "G109", "TDS", 8);
+        hor.add_entrada_horario_auto("jueves", "G110", "TDS", 12);
+        hor.add_entrada_horario_auto("viernes", "G111", "TDS", 13);
+        hor.add_entrada_horario_auto("sabado", "G107", "TDS", 10);
+        hor.add_entrada_horario_auto("domingo", "G107", "TDS", 9);
+
+        hor.add_entrada_horario_auto("lunes", "G107", "MCS", 12);
+        hor.add_entrada_horario_auto("martes", "G108", "MCS", 11);
+        hor.add_entrada_horario_auto("miercoles", "G109", "MCS", 10);
+        hor.add_entrada_horario_auto("jueves", "G110", "MCS", 10);
+        hor.add_entrada_horario_auto("viernes", "G111", "MCS", 8);
+        hor.add_entrada_horario_auto("sabado", "G108", "MCS", 10);
+        hor.add_entrada_horario_auto("domingo", "G107", "MCS", 8);
+
+        hor.add_entrada_horario_auto("lunes", "G107", "I2P", 14);
+        hor.add_entrada_horario_auto("martes", "G108", "I2P", 13);
+        hor.add_entrada_horario_auto("miercoles", "G109", "I2P",14);
+        hor.add_entrada_horario_auto("jueves", "G110", "I2P", 8);
+        hor.add_entrada_horario_auto("viernes", "G111", "I2P", 10);
+        hor.add_entrada_horario_auto("sabado", "G109", "I2P", 10);
+        hor.add_entrada_horario_auto("domingo", "G108", "I2P", 10);
+        
+        hor.add_entrada_horario_auto("lunes", "G111", "HFS", 10);
+        hor.add_entrada_horario_auto("martes", "G110", "HFS", 8);
+        hor.add_entrada_horario_auto("miercoles", "G109", "HFS", 9);
+        hor.add_entrada_horario_auto("jueves", "G108", "HFS", 10);
+        hor.add_entrada_horario_auto("viernes", "G107", "HFS", 14);
+        hor.add_entrada_horario_auto("sabado", "G110", "HFS", 9);
+        hor.add_entrada_horario_auto("domingo", "G108", "HFS", 8);
+
+        hor.add_entrada_horario_auto("lunes", "G110", "ADQ", 10);
+        hor.add_entrada_horario_auto("martes", "G111", "ADQ", 10);
+        hor.add_entrada_horario_auto("miercoles", "G107", "ADQ", 11);
+        hor.add_entrada_horario_auto("jueves", "G108", "ADQ", 8);
+        hor.add_entrada_horario_auto("viernes", "G109", "ADQ", 9);
+        hor.add_entrada_horario_auto("sabado", "G107", "ADQ", 14);
+        hor.add_entrada_horario_auto("domingo", "G108", "ADQ", 13);
+
+        hor.add_entrada_horario_auto("lunes", "G111", "SDS", 8);
+        hor.add_entrada_horario_auto("martes", "G107", "SDS", 10);
+        hor.add_entrada_horario_auto("miercoles", "G107", "SDS", 9);
+        hor.add_entrada_horario_auto("jueves", "G108", "SDS", 14);
+        hor.add_entrada_horario_auto("viernes", "G109", "SDS", 13);
+        hor.add_entrada_horario_auto("sabado", "G110", "SDS", 8);
+        hor.add_entrada_horario_auto("domingo", "G109", "SDS", 10);
+
+        hor.asignatura_auto("TMH", "Test para comprobar el maximo de horas al dia", 2, 1, "50369736Z");
+        hor.add_entrada_horario_auto("lunes", "G111", "TMH", 8);
 
     };
 

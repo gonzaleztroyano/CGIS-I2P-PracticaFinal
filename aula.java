@@ -27,14 +27,14 @@ public class aula {
             for (hora h: d.horas){
                 if (h != null){
                     System.out.println("        Hora:          " + i + ":00 - " + (i+1) + ":00");
-                    System.out.println("        Asignatura:    " + h.asignatura.codigo + ": " + h.asignatura.nombre);
+                    System.out.println("        Asignatura:    " + h.asignatura.codigo + ": " + h.asignatura.nombre+"\n          -");
                     found++;
                 }
                 i++;
             }
             System.out.println("    -----------------");
         }
-        System.out.println("Se han encontrado " + found + " resultados");
+        System.out.println("Se han encontrado " + found + " resultados para este aula.");
     }
     public void update_capacidad(int p_nueva_capacdad){
         this.capacidad = p_nueva_capacdad;
