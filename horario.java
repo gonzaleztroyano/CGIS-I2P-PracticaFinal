@@ -87,7 +87,7 @@ public class horario {
             Scanner scanner_add_asg_ths = new Scanner(System.in);
             int add_asg_ths = scanner_add_asg_ths.nextInt();
 
-            System.out.println("Máximo horas al dia:");
+            System.out.println("Maximo horas al dia:");
             Scanner scanner_add_asg_mhd = new Scanner(System.in);
             int add_asg_mhd = scanner_add_asg_mhd.nextInt();
 
@@ -765,6 +765,7 @@ public class horario {
                 // Si entra en null significa que no hay ningun docente dado de alta. Por tanto, podemos annadirlo. 
                 System.out.println("Introduzca, por favor, los datos que se le solicitan. \n   NOMBRE:");
                 Scanner scanner_add_doce_nombre = new Scanner(System.in);
+                String add_doce_nombre = scanner_add_doce_nombre.nextLine();
                 
                 
                 System.out.println("   Primer Apellido: ");
