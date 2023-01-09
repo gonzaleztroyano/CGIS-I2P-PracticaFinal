@@ -1,17 +1,17 @@
-public class dia {
+public class Dia {
     public String nombre;
-    public hora[] horas  = new hora[24];
+    public Hora[] horas  = new Hora[24];
     
     // Constructor
-    public dia(String nom){
+    public Dia(String nom){
         nombre = nom;
-        hora[] horas = new hora[24];
+        Hora[] horas = new Hora[24];
     }
 
-    public dia(){
+    public Dia(){
         
     }
-    public hora get_entrada(int num){
+    public Hora get_entrada(int num){
         return this.horas[num];
     }
 }

@@ -1,4 +1,4 @@
-public class docente {
+public class Docente {
     public String dni;
     private String nombre;
     private String apellido1;
@@ -9,7 +9,7 @@ public class docente {
     // TODO: usar sueldo y titulo. Actualizar acorde metodos
     
 
-    public docente(String p_dni, String p_nom, String p_ape1, String p_ape2, Double p_sueld, String p_tit){
+    public Docente(String p_dni, String p_nom, String p_ape1, String p_ape2, Double p_sueld, String p_tit){
         dni = p_dni;
         nombre = p_nom;
         apellido1 = p_ape1;

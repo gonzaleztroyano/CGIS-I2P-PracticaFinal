@@ -1,9 +1,9 @@
-public class hora {
+public class Hora {
     // public docente docente;
-    public asignatura asignatura;
-    public hora(){}
+    public Asignatura asignatura;
+    public Hora(){}
 
-    public hora(asignatura asg){
+    public Hora(Asignatura asg){
         asignatura = asg;
         asg.total_horas_semana++;
     }

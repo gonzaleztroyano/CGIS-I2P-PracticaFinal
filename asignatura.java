@@ -1,9 +1,9 @@
-public class asignatura {
+public class Asignatura {
     public String codigo;
     public String nombre;
     public int total_horas_semana;
     public int max_horas_dia;
-    public docente docente;
+    public Docente docente;
     private int horas_actual;
     private int[] asg_dia = new int[] {0,0,0,0,0,0,0};
     // 0 --> +1 (lunes)
@@ -11,7 +11,7 @@ public class asignatura {
     // 2 --> +3 (miercoles)
 
 
-    public asignatura(String cod, String nom, int ths, int mhd, docente doc) {
+    public Asignatura(String cod, String nom, int ths, int mhd, Docente doc) {
         this.codigo = cod;
         this.nombre = nom;
         this.total_horas_semana = ths;

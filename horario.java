@@ -2,14 +2,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.List;
 
-public class horario {
-    List<asignatura> asignaturas = new ArrayList<asignatura>();
-    List<aula> aulas = new ArrayList<aula>();
-    List<docente> docentes = new ArrayList<docente>();
+public class Horario {
+    List<Asignatura> asignaturas = new ArrayList<Asignatura>();
+    List<Aula> aulas = new ArrayList<Aula>();
+    List<Docente> docentes = new ArrayList<Docente>();
     String nombre;
     int length_semana = 0;
 
-    public horario(String nomhorario){
+    public Horario(String nomhorario){
         nombre = nomhorario;
     }
 
@@ -59,7 +59,7 @@ public class horario {
 
 
     public void ClearScreen(){
-        System.out.print("Everything on the console will cleared");
+        System.out.print("");
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
@@ -97,17 +97,17 @@ public class horario {
             Scanner scanner_add_asg_doc = new Scanner(System.in);
             String add_asg_doc = scanner_add_asg_doc.nextLine();
 
-            asignaturas.add(new asignatura(add_asg_cod, add_asg_nom, add_asg_ths, add_asg_mhd, docente_by_dni(add_asg_doc)));
+            asignaturas.add(new Asignatura(add_asg_cod, add_asg_nom, add_asg_ths, add_asg_mhd, docente_by_dni(add_asg_doc)));
             System.out.println("Se ha creado correctamente la asignatura.");
             waiter();
         }
         public void asignatura_auto(String cod, String nom, int ths, int mhd, String dni_doc){
-            asignaturas.add(new asignatura(cod, nom, ths, mhd, docente_by_dni(dni_doc)));
+            asignaturas.add(new Asignatura(cod, nom, ths, mhd, docente_by_dni(dni_doc)));
         }
         public void listar_asignaturas(){
             int n = 0;
             System.out.println("\n Listando asignaturas...\n");
-            for (asignatura i : asignaturas) {
+            for (Asignatura i : asignaturas) {
                 i.show_id_and_name();
                 n++;
             }
@@ -116,7 +116,7 @@ public class horario {
         }
         public void get_asg_codes(){
             System.out.println("Asignaturas registradas en este momento: ");
-            for (asignatura i : asignaturas) {
+            for (Asignatura i : asignaturas) {
                 System.out.println(i.codigo);
             }
         }
@@ -125,7 +125,7 @@ public class horario {
             Scanner scanner = new Scanner(System.in);
             String cod_a_buscar = scanner.next();
             System.out.println("\n");
-            for (asignatura i: asignaturas) {
+            for (Asignatura i: asignaturas) {
                 if (i.codigo.equals(cod_a_buscar)) {
                     i.get_details();
                 }
@@ -140,7 +140,7 @@ public class horario {
             System.out.println("Introduzca el codigo de la asignatura que desea editar: ");
             Scanner scanner_editar = new Scanner(System.in);
             String cod_a_buscar = scanner_editar.next();
-            for (asignatura i: asignaturas) {
+            for (Asignatura i: asignaturas) {
                 if (i.codigo.equals(cod_a_buscar)) {
                     System.out.println("Estos son los detalles de la asignatura solicitada:");
                     i.get_details();
@@ -173,8 +173,8 @@ public class horario {
             }
         }
 
-        public asignatura asignatura_by_id(String p_id){
-            for (asignatura a: asignaturas) {
+        public Asignatura asignatura_by_id(String p_id){
+            for (Asignatura a: asignaturas) {
                 if (p_id.equals(a.codigo)){
                     return a;
                 }
@@ -189,7 +189,7 @@ public class horario {
             System.out.println("Introduzca el codigo de la asignatura que desea eliminar: ");
             Scanner scanner = new Scanner(System.in);
             String cod_a_buscar = scanner.next();
-            for (asignatura i: asignaturas) {
+            for (Asignatura i: asignaturas) {
                 if (i.codigo.equals(cod_a_buscar)) {
                     asignaturas.remove(i);
                     waiter();
@@ -219,12 +219,12 @@ public class horario {
 
     public void add_entrada_horario_auto(String p_dia, String id_aula, String id_asignatura, int p_hora) {
         int dia_deseado = 0;
-        aula aula_deseada = aula_by_id(id_aula);
+        Aula aula_deseada = aula_by_id(id_aula);
         if (aula_deseada == null) {
             System.out.println("\n   ATENCION: El parametro introducido para el codigo de aula no es valido. Revise este valor, por favor.");
             return;
         }
-        asignatura asignatura_deseada = asignatura_by_id(id_asignatura);
+        Asignatura asignatura_deseada = asignatura_by_id(id_asignatura);
         if (asignatura_deseada == null) {
             System.out.println("El parametro introducido para el codigo de asignatura no es valido. Revise este valor, por favor");
             return;
@@ -241,7 +241,7 @@ public class horario {
         // creacion de la hora. En caso contrario, else, dara mensaje de error y
         // retornara.
         if (asignatura_deseada.can_be_scheduled_more(dow_string_to_int(p_dia.toLowerCase()))) {
-            aula_deseada.dia[dia_deseado].horas[p_hora] = new hora(asignatura_deseada);
+            aula_deseada.dia[dia_deseado].horas[p_hora] = new Hora(asignatura_deseada);
             asignatura_deseada.update_scheduled_by_day("+", dow_string_to_int(p_dia.toLowerCase()));
         } else {
             System.out.println("No es posible crear una nueva entrada para " + id_asignatura
@@ -260,7 +260,7 @@ public class horario {
         Scanner scanner_p_aula = new Scanner(System.in);
         String id_aula = scanner_p_aula.next();
         
-        aula aula_deseada = aula_by_id(id_aula);
+        Aula aula_deseada = aula_by_id(id_aula);
         if (aula_deseada == null) {
             System.out.println("\n   ATENCION: El parametro introducido para el codigo de aula no es valido. Revise este valor, por favor.");
             waiter();
@@ -272,7 +272,7 @@ public class horario {
         Scanner scanner_p_asg = new Scanner(System.in);
         String id_asignatura = scanner_p_asg.next();
 
-        asignatura asignatura_deseada = asignatura_by_id(id_asignatura);
+        Asignatura asignatura_deseada = asignatura_by_id(id_asignatura);
         if (asignatura_deseada == null) {
             System.out.println("El parametro introducido para el codigo de asignatura no es valido. Revise este valor, por favor");
             waiter();
@@ -307,25 +307,30 @@ public class horario {
         // Si la asignatura no ha alcanzado su limite de 'ocupacion', permitira la
         // creacion de la hora. En caso contrario, else, dara mensaje de error y
         // retornara.
-
+        System.out.println(" " + asignatura_deseada.can_be_scheduled_more(dow_string_to_int(p_dia.toLowerCase())));
         if (asignatura_deseada.can_be_scheduled_more(dow_string_to_int(p_dia.toLowerCase()))) {
             // Si es posibe annadir una nueva entradas, ahora llega el momento de comprobar si en esa hora ya existe una entrada. 
             // Una posible mejora seria permitir la eliminacion directamente aqui...
             
-            aula_deseada.dia[dia_deseado].horas[p_hora] = new hora(asignatura_deseada);
-            asignatura_deseada.update_scheduled_by_day("+", dow_string_to_int(p_dia.toLowerCase()));
-            aula_deseada.registros_anadidos++;
-            // TODO: revisar esto. Puede que el problema no sea tanto porque .asignatura sea null sino que algo en la ruta si lo sea. Por tanto, no llegara hasta ahi. Queda pdte comprobarlo. 
+            // aula_deseada.dia[dia_deseado].horas[p_hora] = new Hora(asignatura_deseada);
+            // asignatura_deseada.update_scheduled_by_day("+", dow_string_to_int(p_dia.toLowerCase()));
+            // aula_deseada.registros_anadidos++;
+            
+            // SOLVED: revisar esto. Puede que el problema no sea tanto porque .asignatura sea null sino que algo en la ruta si lo sea. Por tanto, no llegara hasta ahi. Queda pdte comprobarlo. 
+            // como info, el problema es que estabamos comprobando si la asignatura era null. Y claro, lo null es la posicion del array de horas del dia.
 
-            // if ( aula_deseada.dia[dia_deseado].horas[p_hora].asignatura == null ){
-            //     aula_deseada.dia[dia_deseado].horas[p_hora] = new hora(asignatura_deseada);
-            // } else {
-            //     // Si NO es null, else, significa que en esa hora ya existe una entrada. Por tanto, no la annadimos.
-            //     System.out.println("No es posible crear una nueva entrada para " + id_asignatura
-            //         + " porque ya existe una clase programada a esa misma hora.");
-            //     waiter();
-            //     return;
-            // }
+            if ( aula_deseada.dia[dia_deseado].horas[p_hora] == null ){
+                aula_deseada.dia[dia_deseado].horas[p_hora] = new Hora(asignatura_deseada);
+                asignatura_deseada.update_scheduled_by_day("+", dow_string_to_int(p_dia.toLowerCase()));
+                aula_deseada.registros_anadidos++;
+            } else {
+                // Si NO es null, else, significa que en esa hora ya existe una entrada. Por tanto, no la annadimos.
+                System.out.println("No es posible crear una nueva entrada para " + id_asignatura
+                    + " porque ya existe una clase programada a esa misma hora.");
+                waiter();
+                return;
+            }
+            System.out.println("Se ha agregado correctamente la entrada al hoario");
         } else {
             System.out.println("No es posible crear una nueva entrada para " + id_asignatura
                     + "porque se ha alcanzado su limite (" + asignatura_deseada.max_horas_dia + ")");
@@ -344,7 +349,7 @@ public class horario {
         Scanner scanner_p_aula = new Scanner(System.in);
         String id_aula = scanner_p_aula.next();
         
-        aula aula_deseada = aula_by_id(id_aula);
+        Aula aula_deseada = aula_by_id(id_aula);
         if (aula_deseada == null) {
             System.out.println("\n   ATENCION: El parametro introducido para el codigo de aula no es valido. Revise este valor, por favor.");
             waiter();
@@ -388,14 +393,14 @@ public class horario {
             System.out.println("Introduzca la nueva asignatura por la que desea sustituir " + aula_deseada.dia[dia_deseado].horas[p_hora].asignatura.nombre);
             Scanner scanner_nueva_asig = new Scanner(System.in);
             String id_asignatura = scanner_nueva_asig.next();
-            asignatura asignatura_deseada = asignatura_by_id(id_asignatura);
+            Asignatura asignatura_deseada = asignatura_by_id(id_asignatura);
             if (asignatura_deseada == null) {
                 System.out.println("El parametro introducido para el codigo de asignatura no es valido. Revise este valor, por favor");
                 waiter();
                 return;
             }
             if (asignatura_deseada.can_be_scheduled_more(dow_string_to_int(p_dia.toLowerCase()))) {
-                aula_deseada.dia[dia_deseado].horas[p_hora] = new hora(asignatura_deseada);
+                aula_deseada.dia[dia_deseado].horas[p_hora] = new Hora(asignatura_deseada);
                 asignatura_deseada.update_scheduled_by_day("+", dow_string_to_int(p_dia.toLowerCase()));
                 System.out.println("Se ha creado correctamente la entrada indicada. Regresando al menu...");
                 waiter();
@@ -422,7 +427,7 @@ public class horario {
         Scanner scanner_p_aula = new Scanner(System.in);
         String id_aula = scanner_p_aula.next();
         
-        aula aula_deseada = aula_by_id(id_aula);
+        Aula aula_deseada = aula_by_id(id_aula);
         if (aula_deseada == null) {
             System.out.println("\n   ATENCION: El parametro introducido para el codigo de aula no es valido. Revise este valor, por favor.");
             waiter();
@@ -455,7 +460,7 @@ public class horario {
             return;
         }
         // AQUI se produce la eliminacion de la entrada
-        asignatura asignatura_deseada = aula_deseada.dia[dia_deseado].horas[p_hora].asignatura;
+        Asignatura asignatura_deseada = aula_deseada.dia[dia_deseado].horas[p_hora].asignatura;
         asignatura_deseada.update_scheduled_by_day("-", dow_string_to_int(p_dia.toLowerCase()));
         aula_deseada.dia[dia_deseado].horas[p_hora] = null;
         System.out.println("Se ha eliminado correctamente la entrada indicada");
@@ -464,7 +469,7 @@ public class horario {
 
 
     public void get_entradas(){
-        for (aula a: aulas){
+        for (Aula a: aulas){
             System.out.println("Para el aula codigo " + a.id + ":");
             a.get_lessons();
             System.out.println("\n================\n");
@@ -483,8 +488,8 @@ public class horario {
             waiter();
             return;
         } else {
-            aula au_a_listar = aula_by_id(aula_a_listar);
-            for (aula a: aulas) {
+            Aula au_a_listar = aula_by_id(aula_a_listar);
+            for (Aula a: aulas) {
                 if (a == au_a_listar){
                     a.get_lessons();
                 }
@@ -508,13 +513,13 @@ public class horario {
             return;
         } else {
             int found = 0;
-            asignatura asignatura_para_listar = asignatura_by_id(asg_a_listar);
+            Asignatura asignatura_para_listar = asignatura_by_id(asg_a_listar);
             //                     G109   miercoles    9:00 - 10:00
             System.out.println("    AULA |   DIA    |  HORA");
-            for (aula a : aulas) {
-                for (dia d : a.dia) {
+            for (Aula a : aulas) {
+                for (Dia d : a.dia) {
                     int i = 0;
-                    for (hora h: d.horas) {
+                    for (Hora h: d.horas) {
                         if (h != null) {
                             if (h.asignatura == asignatura_para_listar) {
                                 System.out.println(
@@ -546,11 +551,11 @@ public class horario {
             return;
         } else {
             int found = 0;
-            docente docente_a_listar = docente_by_dni(dni_docente_a_listar);
-            for (aula a: aulas) {
-                for (dia d: a.dia){
+            Docente docente_a_listar = docente_by_dni(dni_docente_a_listar);
+            for (Aula a: aulas) {
+                for (Dia d: a.dia){
                     int i = 0;
-                    for (hora h: d.horas){
+                    for (Hora h: d.horas){
                         if (h != null) {
                             if (h.asignatura.docente == docente_a_listar) {
                                 //                          aula           nombre_dia                    hora                     asignatura
@@ -579,12 +584,12 @@ public class horario {
      * ***********************************************
      */
         public void add_aula_auto(String p_id, int p_csp){
-            aulas.add(new aula(p_id, p_csp));
+            aulas.add(new Aula(p_id, p_csp));
         }
 
         public void get_aula_codes(){
             System.out.println("Aulas registradas en este momento: ");
-            for (aula i: aulas) {
+            for (Aula i: aulas) {
                 System.out.println(i.id);
             }
         }
@@ -595,7 +600,7 @@ public class horario {
             // TODO: Check if requested exists. Maybe return an array?
             Scanner scanner = new Scanner(System.in);
             String cod_a_buscar = scanner.next();
-            aula aula_a_ver_detalles = aula_by_id(cod_a_buscar);
+            Aula aula_a_ver_detalles = aula_by_id(cod_a_buscar);
             if (aula_a_ver_detalles == null) {
                 System.out.println("No se encuetra ningun aula con el ID indicado. Volviendo al menu...");
             } else {
@@ -606,16 +611,16 @@ public class horario {
 
         public void get_detalle_aulas(){
             System.out.println("Listado de aulas registradas en este momento: ");
-            for (aula i: aulas) {
+            for (Aula i: aulas) {
                     i.get_details();
                     System.out.println("");
                 }
             waiter();
             }
 
-        public aula aula_by_id(String p_id){
+        public Aula aula_by_id(String p_id){
             // System.out.println("Entro en method");
-            for (aula a: aulas) {
+            for (Aula a: aulas) {
                 // System.out.println("Recorriendo...");
                 if (p_id.equals(a.id)){
                     // System.out.println("Encontrado");
@@ -631,7 +636,7 @@ public class horario {
             
             Scanner scanner = new Scanner(System.in);
             String id_aula_pasado_por_scanner = scanner.next();
-            aula aula_a_eliminar = aula_by_id(id_aula_pasado_por_scanner);
+            Aula aula_a_eliminar = aula_by_id(id_aula_pasado_por_scanner);
             aulas.remove(aula_a_eliminar);
             
             System.out.println("La aula ha sido eliminada correctamente.");
@@ -648,7 +653,7 @@ public class horario {
             System.out.println("Indique la capacidad para aula " + creacion_aula + ":");
             Scanner scannercapacidad = new Scanner(System.in);
             int capacidad_aula_nueva = scannercapacidad.nextInt();
-            aulas.add(new aula(creacion_aula, capacidad_aula_nueva));
+            aulas.add(new Aula(creacion_aula, capacidad_aula_nueva));
             System.out.println("Su aula ha sido creada con exito.");
             waiter();
         }
@@ -672,7 +677,7 @@ public class horario {
             if (aula_by_id(id_aula_a_editar) == null) {
                 System.out.println("El ID introducido no se corresponde con ninguno registrado en la base de datos");
             } else {
-                aula aula_a_editar = aula_by_id(id_aula_a_editar);
+                Aula aula_a_editar = aula_by_id(id_aula_a_editar);
                 aula_a_editar.get_details();
                 System.out.println("Desea cambiar el ID o la capacidad? [ID/CAP]");
                 Scanner scanner_cosa_a_cambiar = new Scanner(System.in);
@@ -706,7 +711,7 @@ public class horario {
 
         public void get_docente_dnis(){
             System.out.println("DNIs registrados en este momento: ");
-            for (docente i: docentes) {
+            for (Docente i: docentes) {
                 System.out.println(i.get_dni());
             }
             waiter();
@@ -714,7 +719,7 @@ public class horario {
 
         public void get_docente_listado(){
             System.out.println("DNIs registrados en este momento: ");
-            for (docente i: docentes) {
+            for (Docente i: docentes) {
                 i.get_details();
                 System.out.println("");
             }
@@ -722,20 +727,20 @@ public class horario {
         }
 
         public void get_listado_docente_name_and_dni(){
-            for (docente d: docentes){
+            for (Docente d: docentes){
                 System.out.println(d.get_fullname_and_dni());
             }
         }
 
         public void add_docente_auto(String dni, String nombre, String apellido1, String apellido2, Double p_sueldo, String p_tit){
-            docentes.add(new docente(dni, nombre, apellido1, apellido2, p_sueldo, p_tit));
+            docentes.add(new Docente(dni, nombre, apellido1, apellido2, p_sueldo, p_tit));
         }
 
         public void docente_delete(){
             System.out.println("Por favor, introduzca el DNI del docente que desee dar de baja:");
             Scanner scanner = new Scanner(System.in);
             String docente_de_baja = scanner.next();
-            docente docente_a_eliminar = docente_by_dni(docente_de_baja);
+            Docente docente_a_eliminar = docente_by_dni(docente_de_baja);
             if (docente_a_eliminar == null) {
                 System.out.println("El docente que ha introducido no se encuentra. Volviendo al menu.");
                 waiter();
@@ -746,8 +751,8 @@ public class horario {
             }
         }
 
-        public docente docente_by_dni(String p_id){
-            for (docente d: docentes) {
+        public Docente docente_by_dni(String p_id){
+            for (Docente d: docentes) {
                 // System.out.println("Recorriendo...");
                 if (p_id.equals(d.dni)){
                     return d;
@@ -787,7 +792,7 @@ public class horario {
 
                 // Seria interesante hacer aqui comprobaciones con hasNextXXXX en los Scanners para evitar que java devuelva errores feos...
 
-                docentes.add(new docente(add_doce_dni, add_doce_nombre, add_doce_ape1, add_doce_ape2, add_doce_sueldo, add_doce_tit));
+                docentes.add(new Docente(add_doce_dni, add_doce_nombre, add_doce_ape1, add_doce_ape2, add_doce_sueldo, add_doce_tit));
 
                 System.out.println("Se ha annadido correctamente el docente");
                 waiter();
@@ -822,7 +827,7 @@ public class horario {
                 // Si es null el dni introducido no existe
                 System.out.println("El DNI introducido no se corresponde con ninguno registrado en la base de datos");
             } else {
-                docente docente_a_modificar = docente_by_dni(doce_a_buscar);
+                Docente docente_a_modificar = docente_by_dni(doce_a_buscar);
                 System.out.print("Los datos actuales del docente son:");
                 docente_a_modificar.get_details();
                 System.out.println("Introduzca la clave del campo a variar\nLa claves estan formadas por las 3-4 primeras letras mayusculas mostradas en el listado");

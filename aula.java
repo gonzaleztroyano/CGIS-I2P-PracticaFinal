@@ -1,11 +1,11 @@
-public class aula {
+public class Aula {
     public String id;
     private int capacidad;
-    public dia[] dia = new dia[] { new dia("lunes"), new dia("martes"), new dia("miercoles"),
-            new dia("jueves"), new dia("viernes"), new dia("sabado"), new dia("domingo")};
+    public Dia[] dia = new Dia[] { new Dia("lunes"), new Dia("martes"), new Dia("miercoles"),
+            new Dia("jueves"), new Dia("viernes"), new Dia("sabado"), new Dia("domingo")};
     public int registros_anadidos;
 
-    public aula(String p_id, int p_csp){
+    public Aula(String p_id, int p_csp){
         id = p_id;
         // Problema: se deben poder manejar tantos horarios como aulas tenga!
         // Solucion: El aula tiene los dias. 
@@ -21,10 +21,10 @@ public class aula {
 
     public void get_lessons(){
         int found = 0;
-        for (dia d: dia) {
+        for (Dia d: dia) {
             System.out.println("    Dia: " + d.nombre);
             int i = 0;
-            for (hora h: d.horas){
+            for (Hora h: d.horas){
                 if (h != null){
                     System.out.println("        Hora:          " + i + ":00 - " + (i+1) + ":00");
                     System.out.println("        Asignatura:    " + h.asignatura.codigo + ": " + h.asignatura.nombre+"\n          -");

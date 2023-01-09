@@ -6,7 +6,7 @@
  */
 import java.util.Scanner;
 class Main {
-    static horario horario1 = new horario("horario1");
+    static Horario horario1 = new Horario("horario1");
 
     public static void main(String[] args) {
         // horario1.nueva_asignatura();
@@ -113,13 +113,13 @@ class Main {
                 case 24:
                     horario1.ClearScreen();
                     // aqui puede ser interesante eliminar el objeto horario1 y volverlo a crear, directamente. Sin annadir datos quiza
-                    horario1 = new horario("horario1");
+                    horario1 = new Horario("horario1");
                     System.out.println("Se han borrado todos los datos de la base de datos."); // Evidentemente no hay base de datos, pero asi queda mas guay
                     horario1.waiter();
                     break;
                 case 25:
                     horario1.ClearScreen();
-                    horario1 = new horario("horario1");
+                    horario1 = new Horario("horario1");
                     carga_inicial(horario1);
                     System.out.println("Se ha restaurado el horario a su estado inicial.");
                     horario1.waiter();
@@ -194,7 +194,7 @@ class Main {
 
 
 
-    public static void carga_inicial(horario hor) {
+    public static void carga_inicial(Horario hor) {
 
         hor.add_docente_auto("12345678A","Manuel", "Sanchez", "Diaz", 2000.0, "Profesor Titular");
         hor.add_docente_auto("23456789J","Cristina", "Gonzalez", "Pons", 3000.0, "Doctora");
