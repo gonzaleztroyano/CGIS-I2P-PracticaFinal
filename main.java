@@ -1,3 +1,4 @@
+
 /**
  * main class of Java Program
  * 
@@ -5,6 +6,7 @@
  * 
  */
 import java.util.Scanner;
+
 class Main {
     static Horario horario1 = new Horario("horario1");
 
@@ -12,19 +14,22 @@ class Main {
         // horario1.nueva_asignatura();
         carga_inicial(horario1);
 
-        /*horario1.listar_asignaturas();
-        horario1.get_asg_codes();
-        horario1.detalle_asignatura();
-        horario1.get_detalle_aula();
-        horario1.get_docente_listado();
-        horario1.editar_asignatura();*/
+        /*
+         * horario1.listar_asignaturas();
+         * horario1.get_asg_codes();
+         * horario1.detalle_asignatura();
+         * horario1.get_detalle_aula();
+         * horario1.get_docente_listado();
+         * horario1.editar_asignatura();
+         */
         muestra_menu();
     }
 
     public static void muestra_menu() {
 
         int num = 0;
-        while (num != 6) { // Este valor solo tomara 6 si se selecciona la opcion 6 del menu. De no ser asi, volvera a ejecutarse la funcion de forma continua.
+        while (num != 6) { // Este valor solo tomara 6 si se selecciona la opcion 6 del menu. De no ser
+                           // asi, volvera a ejecutarse la funcion de forma continua.
             horario1.ClearScreen();
             System.out.println("\n\n\n\n\n ================  MENU  ===============\n\n");
             System.out.println("Elija una de las siguientes opciones:");
@@ -37,7 +42,6 @@ class Main {
             System.out.println("    1.4. Borrar TODAS las asiganturas");
             System.out.println("    1.5. Listar todas las asignaturas");
             System.out.println("    1.6. Ver los detalles de una asignatura");
-
 
             System.out.println("\n2. Definir horario:");
             System.out.println("    2.1. Agregar una entrada al horario");
@@ -68,7 +72,8 @@ class Main {
 
             System.out.println("6. Salir");
 
-            System.out.println("Introduzca el numero de la opcion que desea seleccionar.\n Sin espacios ni puntos. Ejemplo: '21' para agregar entrada al horario.");
+            System.out.println(
+                    "Introduzca el numero de la opcion que desea seleccionar.\n Sin espacios ni puntos. Ejemplo: '21' para agregar entrada al horario.");
 
             Scanner scanner = new Scanner(System.in);
             num = scanner.nextInt();
@@ -112,9 +117,12 @@ class Main {
                     break;
                 case 24:
                     horario1.ClearScreen();
-                    // aqui puede ser interesante eliminar el objeto horario1 y volverlo a crear, directamente. Sin annadir datos quiza
+                    // aqui puede ser interesante eliminar el objeto horario1 y volverlo a crear,
+                    // directamente. Sin annadir datos quiza
                     horario1 = new Horario("horario1");
-                    System.out.println("Se han borrado todos los datos de la base de datos."); // Evidentemente no hay base de datos, pero asi queda mas guay
+                    System.out.println("Se han borrado todos los datos de la base de datos."); // Evidentemente no hay
+                                                                                               // base de datos, pero
+                                                                                               // asi queda mas guay
                     horario1.waiter();
                     break;
                 case 25:
@@ -185,24 +193,21 @@ class Main {
                     System.out.println("Gracias por usar esta apliacion\nSaliendo...\n");
                     break;
                 default:
-                        System.out.println("El numero que ha introducido no es valido. Por favor, intruzca uno de nuevo.");
-                        break;
+                    System.out.println("El numero que ha introducido no es valido. Por favor, intruzca uno de nuevo.");
+                    break;
             }
 
         }
     }
 
-
-
     public static void carga_inicial(Horario hor) {
 
-        hor.add_docente_auto("12345678A","Manuel", "Sanchez", "Diaz", 2000.0, "Profesor Titular");
-        hor.add_docente_auto("23456789J","Cristina", "Gonzalez", "Pons", 3000.0, "Doctora");
-        hor.add_docente_auto("34567901C","Rodrigo", "Hidalgo", "Esteban", 1000.0, "Profesor asociado");
-        hor.add_docente_auto("45678012D","Lucia", "Jimenez", "Llorente", 3000.0, "Doctora");
-        hor.add_docente_auto("20458599E","Javier", "Airado", "Rodriguez", 2000.0, "Profesor Titular");
-        hor.add_docente_auto("50369736Z","Pablo", "Aguado", "Gonzalez", 2000.0, "Profesor Titular");
-
+        hor.add_docente_auto("12345678A", "Manuel", "Sanchez", "Diaz", 2000.0, "Profesor Titular");
+        hor.add_docente_auto("23456789J", "Cristina", "Gonzalez", "Pons", 3000.0, "Doctora");
+        hor.add_docente_auto("34567901C", "Rodrigo", "Hidalgo", "Esteban", 1000.0, "Profesor asociado");
+        hor.add_docente_auto("45678012D", "Lucia", "Jimenez", "Llorente", 3000.0, "Doctora");
+        hor.add_docente_auto("20458599E", "Javier", "Airado", "Rodriguez", 2000.0, "Profesor Titular");
+        hor.add_docente_auto("50369736Z", "Pablo", "Aguado", "Gonzalez", 2000.0, "Profesor Titular");
 
         hor.asignatura_auto("I2P", "Introduccion a la Programacion", 8, 2, "50369736Z");
         hor.asignatura_auto("MCS", "Matematicas para la Computacion y Servicios", 9, 4, "23456789J");
@@ -216,7 +221,6 @@ class Main {
         hor.add_aula_auto("G109", 25);
         hor.add_aula_auto("G110", 40);
         hor.add_aula_auto("G111", 35);
-
 
         hor.add_entrada_horario_auto("lunes", "G107", "TDS", 10);
         hor.add_entrada_horario_auto("martes", "G108", "TDS", 9);
@@ -236,12 +240,12 @@ class Main {
 
         hor.add_entrada_horario_auto("lunes", "G107", "I2P", 14);
         hor.add_entrada_horario_auto("martes", "G108", "I2P", 13);
-        hor.add_entrada_horario_auto("miercoles", "G109", "I2P",14);
+        hor.add_entrada_horario_auto("miercoles", "G109", "I2P", 14);
         hor.add_entrada_horario_auto("jueves", "G110", "I2P", 8);
         hor.add_entrada_horario_auto("viernes", "G111", "I2P", 10);
         hor.add_entrada_horario_auto("sabado", "G109", "I2P", 10);
         hor.add_entrada_horario_auto("domingo", "G108", "I2P", 10);
-        
+
         hor.add_entrada_horario_auto("lunes", "G111", "HFS", 10);
         hor.add_entrada_horario_auto("martes", "G110", "HFS", 8);
         hor.add_entrada_horario_auto("miercoles", "G109", "HFS", 9);
